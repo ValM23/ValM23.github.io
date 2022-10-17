@@ -17,6 +17,15 @@
 #     - tag: Rails
 #   timeline-side: right
 
+- title: Freelance/Hobbyist Software Dev
+  title-url: https://github.com/ValM23
+  date: Present
+  tags:
+    - tag: React
+    - tag: Learning Unreal
+    - tag: Blender 3D Sculpting
+    - tag: Virtualization (Hypervisor, VirtualBox)
+    - tag: AWS Certified Developer Cert - In Progress
 
 
 - title: Kinder Morgan Energy Partners
@@ -33,8 +42,8 @@
 
 - title: Western Governors University
   title-url: https://wgu.edu
-  date: 2021 - Present ('Havent graduated')
-  subtitle: M.Sc. Computer Science
+  date: 2021 - Present
+  subtitle: B.S. IT 
   timeline-side: left
 
 
@@ -52,5 +61,5 @@
   title-url: https://hccs.edu
   date: 2011 - 2015
   subtitle: A.A. in Liberal Arts and Humanities 
-  subtitle: Concurrently completed in HS
+  
   timeline-side: left
