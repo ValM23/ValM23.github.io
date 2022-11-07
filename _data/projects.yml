@@ -13,12 +13,19 @@
 #     - tag: AngularJS
 #     - tag: Node
 
-- name: Working on Code Mentor.io project for a typing game
-  descr: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam"
-  demo: https://example.com/
+- name: Typing Game
+  descr: "CodeMentor.io through Arc.dev project whose goal is to create and design a typing game using ReactJS and all necessary backend components. FullStack Project. Still in progress of developing game logic/design."
+  demo: tba
   tags:
     - tag: React
     - tag: Express
     - tag: TypeScript
     - tag: Node
-
+- name: React Dashboard 
+  descr: "Project based on Javascript Mastery Pro project to create a React E-Comm/Small Business Productivity dashboard."
+  demo: https://www.youtube.com/watch?v=jx5hdo50a2M
+  tags:
+    -tag: syncfusion
+    -tag: tailwindcss
+    -tag: ReactJS
+    -tag: HTML
