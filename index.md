@@ -34,7 +34,13 @@ a Network Operations Technician transitioning into Cybersecurity, specializing i
 
 ### NahamaCon 2025 CTF
 **Description:** AI-Powered CTF 
-**Technologies used:** Python, Gemini, Kali Linux tool suite, Rust, Ghahidra
+
+**Technologies used:** 
+- Python 
+- Gemini
+- Kali Linux tool suite
+- Rust
+- Ghahidra
 
 
 
@@ -49,10 +55,11 @@ a Network Operations Technician transitioning into Cybersecurity, specializing i
 ---
 
 ## Certifications
-**Offensive Security Certified Professional (OSCP) (Studying and raising money for) **
-**INE eJPT (Studying For)**
-**COMPTIA PenTest (Studying For)**
-**COMPTIA Security+**
+
+- **Offensive Security Certified Professional (OSCP) (Studying and raising money for) **
+- **INE eJPT (Studying For)**
+- **COMPTIA PenTest (Studying For)**
+- **COMPTIA Security+**
 
 
 ---
