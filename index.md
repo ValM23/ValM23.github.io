@@ -11,7 +11,7 @@ a Network Operations Technician transitioning into Cybersecurity, specializing i
 
 ## Desired Roles
 
-- **Pentetration Tester
+- **Pentetration Tester**
 - **Red Teamer** 
 - **Vulnerability Analyst**
 - **Network Security Analyst**
@@ -56,9 +56,12 @@ a Network Operations Technician transitioning into Cybersecurity, specializing i
 
 ## Certifications
 
-- **Offensive Security Certified Professional (OSCP) (Studying and raising money for) **
+- **Offensive Security Certified Professional (OSCP) (Studying and raising money for)**
+  
 - **INE eJPT (Studying For)**
+  
 - **COMPTIA PenTest (Studying For)**
+
 - **COMPTIA Security+**
 
 
