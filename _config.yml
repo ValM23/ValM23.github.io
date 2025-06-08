@@ -1,0 +1,6 @@
+remote_theme: pages-themes/midnight@v0.2.0
+plugins:
+- jekyll-remote-theme # add this line to the plugins list if you already have one
+title: Matthew T Valdez - Programs and Projects
+tagline: Projects and ongoing research in Penetration Testing and Malware Analysis [Also just gubbins]
+description: Projects, Cyber Security PoC, random projects, forrays into malwware analysis, study material
