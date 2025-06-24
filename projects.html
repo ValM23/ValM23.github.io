@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Matt's Cyber Security Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Fira Code', monospace; background-color: #0d1117; color: #c9d1d9; }
+        .nav-link.active { color: #34d399; text-shadow: 0 0 5px #34d399; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0d1117; }
+        ::-webkit-scrollbar-thumb { background: #34d399; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+    </style>
+</head>
+<body class="text-gray-300">
+
+    <!-- Header & Navigation Bar -->
+    <header id="header" class="bg-gray-900/70 backdrop-blur-md shadow-lg sticky top-0 z-50 transition-all duration-300 border-b border-gray-700/50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold text-white hover:text-emerald-400 transition-colors">Matthew T. Valdez</a>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-300 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+            <ul id="desktop-menu" class="hidden md:flex items-center space-x-8 font-medium">
+                <li><a href="index.html" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">About</a></li>
+                <li><a href="credentials.html" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">Credentials</a></li>
+                <li><a href="projects.html" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">Projects</a></li>
+                <li><a href="resources.html" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">Resources</a></li>
+            </ul>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden border-t border-gray-700/50">
+            <ul class="flex flex-col items-center space-y-4 py-4 font-medium">
+                <li><a href="index.html" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">About</a></li>
+                <li><a href="credentials.html" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">Credentials</a></li>
+                <li><a href="projects.html" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">Projects</a></li>
+                <li><a href="resources.html" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">Resources</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto px-6 py-12">
+        <!-- Projects Section -->
+        <section id="projects" class="py-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-8 text-white">Projects</h2>
+                <p class="text-gray-400 mb-12">Here are some of the things I've built and secured.</p>
+    
+                <!-- Grid for Projects -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Project Card 1 -->
+                    <div class="bg-gray-900 rounded-xl shadow-lg border border-gray-700 p-6 flex flex-col hover:border-emerald-500 hover:shadow-emerald-500/10 transition-all duration-300">
+                        <h3 class="text-xl font-bold text-white mb-2">Learning Rust Lang for Ethical Hacking</h3>
+                        <p class="text-gray-400 mb-4 flex-grow">Basically the first few exercises in The Rust Book: Cornell Edition</p>
+                        <div class="mb-4">
+                            <span class="inline-block bg-gray-800 text-emerald-400 text-xs font-mono px-2 py-1 rounded-full mr-2 mb-2">C++ but Zesty</span>
+                            <span class="inline-block bg-gray-800 text-emerald-400 text-xs font-mono px-2 py-1 rounded-full mr-2 mb-2">Fun to obsfucate</span>
+                            <span class="inline-block bg-gray-800 text-emerald-400 text-xs font-mono px-2 py-1 rounded-full mr-2 mb-2">Meme language for srs work</span>
+                        </div>
+                        <div class="mt-auto text-right">
+                            <a href="https://github.com/ValM23/rustlang" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-white font-semibold">Where the wild files are. &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Add more project cards here as needed -->
+                    <div class="bg-gray-900/50 rounded-xl border border-dashed border-gray-700 p-6 flex items-center justify-center">
+                        <p class="text-gray-500">Another project coming soon...</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-6 bg-gray-900 border-t border-gray-700/50 text-gray-400">
+        <p>&copy; 2025 Matthew Valdez All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+            const mobileNavLinks = document.querySelectorAll('#mobile-menu .nav-link');
+            mobileNavLinks.forEach(link => { link.addEventListener('click', () => { mobileMenu.classList.add('hidden'); }); });
+
+            // --- Active Link Highlighting ---
+            const navLinks = document.querySelectorAll('.nav-link');
+            const currentPage = window.location.pathname.split('/').pop();
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
