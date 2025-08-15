@@ -3,593 +3,393 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me | Matt's Cyber Security Portfolio</title>
-    <link rel="icon"                                                                                                                                      │
- │           href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%2334d399'%20d='M12%2C2L9%2C5V11L  │
- │           5%2C15V19H9V15L13%2C11V5L16%2C2H12Z'/%3E%3C/svg%3E">
+    <title>Matthew T. Valdez | Cybersecurity Portfolio</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23dc2626'%20d='M12%2C2L9%2C5V11L5%2C15V19H9V15L13%2C11V5L16%2C2H12Z'/%3E%3C/svg%3E">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Fira Code -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Custom Styles -->
     <style>
-        /* Use the Fira Code font family for a "hacker terminal" feel */
+        :root {
+            --background: #0d1117;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent: #dc2626; /* A strong, "red team" red */
+            --surface: rgba(22, 27, 34, 0.7); /* Slightly more opaque for readability */
+            --border: rgba(139, 148, 158, 0.2);
+        }
+
         body {
             font-family: 'Fira Code', monospace;
-            background-color: #0d1117; /* A very dark, near-black background */
-            color: #c9d1d9; /* Light gray text for readability */
-        }
-        /* Style for the active navigation link with a neon green glow */
-        .nav-link.active {
-            color: #34d399; /* Emerald-400 for a bright green */
-            text-shadow: 0 0 5px #34d399;
-            border-bottom: 2px solid #34d399; /* Underline effect */
+            background-color: var(--background);
+            color: var(--text-primary);
+            /* Hexagon background pattern */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='46'%3E%3Cpolygon stroke='%231a202c' stroke-width='1' fill='none' points='20 0 40 11.5 40 34.5 20 46 0 34.5 0 11.5 20 0'/%3E%3C/svg%3E");
         }
 
-        /* New styles for enhanced navigation bar */
-        #desktop-menu li a {
-            padding: 0.5rem 1rem;
-            border: 1px solid transparent;
-            transition: all 0.2s ease-in-out;
-            border-radius: 0.25rem;
-        }
-
-        #desktop-menu li a:hover {
-            border-color: #34d399;
-            box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
-            background-color: rgba(52, 211, 153, 0.1);
-        }
-
-        #desktop-menu li a.active {
-            border-color: #34d399;
-            box-shadow: 0 0 12px rgba(52, 211, 153, 0.7);
-            background-color: rgba(52, 211, 153, 0.2);
-        }
-
-        /* Mobile menu enhancements */
-        #mobile-menu ul li a {
-            padding: 0.75rem 1rem;
-            width: 100%;
-            text-align: center;
-            border-bottom: 1px solid rgba(52, 211, 153, 0.2);
-        }
-
-        #mobile-menu ul li:last-child a {
-            border-bottom: none;
-        }
-
-        #mobile-menu ul li a:hover {
-            background-color: rgba(52, 211, 153, 0.1);
-        }
-
-        #mobile-menu ul li a.active {
-            background-color: rgba(52, 211, 153, 0.2);
-            color: #34d399;
-            text-shadow: 0 0 5px #34d399;
-        }
-        /* Custom scrollbar for a more themed look */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0d1117; }
-        ::-webkit-scrollbar-thumb { background: #34d399; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
-
-        /* Scanline effect */
-        body::before {
+        /* Vignette and Scanline Filter */
+        body::after {
             content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: repeating-linear-gradient(to bottom, transparent 0px, rgba(0, 0, 0, 0.1) 1px, transparent 2px);
             pointer-events: none;
+            background: 
+                repeating-linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.3) 1px, transparent 3px),
+                radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.4) 100%);
             z-index: 9999;
         }
 
-        /* Terminal window styling */
-        .terminal-window {
-            background-color: #1a1a1a;
-            border: 1px solid #333;
-            box-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+        /* Hyprland-inspired "Window" Styling */
+        .hypr-window {
+            background-color: var(--surface);
+            backdrop-filter: blur(16px) saturate(120%);
+            -webkit-backdrop-filter: blur(16px) saturate(120%);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
         }
-
-        .terminal-header {
-            background-color: #333;
-            padding: 8px;
-            border-top-left-radius: 0.75rem;
-            border-top-right-radius: 0.75rem;
-        }
-
-        .terminal-body {
-            padding: 1rem;
-        }
-
-        .terminal-hero {
-            min-width: 300px;
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #1a1a1a;
-            border: 1px solid #333;
-            box-shadow: 0 0 15px rgba(52, 211, 153, 0.5);
-            padding: 2rem;
-            border-radius: 0.75rem;
-        }
-
-        .terminal-hero pre {
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-
-        .terminal-hero .blinking-cursor {
-            font-size: inherit;
-            vertical-align: baseline;
-        }
-
-        .terminal-body pre {
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-</style>
-</head>
-<body class="text-gray-300">
-
-    <!-- Header & Navigation Bar -->
-    <!-- This header is consistent across all pages -->
-    <header id="header" class="bg-gray-900/70 backdrop-blur-md shadow-lg sticky top-0 z-50 transition-all duration-300 border-b border-gray-700/50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Your Name/Logo -->
-            <a href="index.html" class="text-xl font-bold text-white hover:text-emerald-400 transition-colors">Matthew T. Valdez</a>
-
-            <!-- Mobile Menu Button (Hamburger Icon) -->
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-gray-300 focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                </button>
-            </div>
-
-            <!-- Desktop Navigation Links -->
-            <ul id="desktop-menu" class="hidden md:flex items-center space-x-8 font-medium">
-                <li><a href="#about" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">About</a></li>
-                <li><a href="#credentials" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">Credentials</a></li>
-                <li><a href="#projects" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">Projects</a></li>
-                <li><a href="#resources" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">Resources</a></li>
-            </ul>
-        </nav>
         
-        <!-- Mobile Menu (hidden by default) -->
-        <div id="mobile-menu" class="hidden md:hidden border-t border-gray-700/50">
-            <ul class="flex flex-col items-center space-y-4 py-4 font-medium">
-                <li><a href="#about" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">About</a></li>
-                <li><a href="#credentials" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">Credentials</a></li>
-                <li><a href="#projects" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">Projects</a></li>
-                <li><a href="#resources" class="nav-link text-gray-400 hover:text-emerald-400 transition-colors duration-300">Resources</a></li>
-            </ul>
-        </div>
-    </header>
+        /* Subtle, professional hover effect */
+        .hypr-window:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(220, 38, 38, 0.15);
+        }
 
-    <!-- Main Content Area -->
-    <main class="container mx-auto px-6 py-12">
+        .hypr-header {
+            padding: 0.75rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+        
+        .hypr-content {
+            padding: 1.25rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
 
-        <!-- Home/Hero Section -->
-        <section id="home" class="min-h-[calc(100vh-80px)] flex items-center justify-center text-center -mt-16">
-            <div class="terminal-hero text-left">
-                <pre class="text-emerald-400 text-2xl md:text-4xl font-bold mb-4"><span id="typed-text"></span><span class="blinking-cursor">|</span></pre>
-                <p class="text-lg text-gray-400">Network Ops Tech upskilling into OffSec Professional</p>
-            </div>
-        </section>
+        /* Custom Scrollbar for window content */
+        .hypr-content::-webkit-scrollbar { width: 6px; }
+        .hypr-content::-webkit-scrollbar-track { background: transparent; }
+        .hypr-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        .hypr-content::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-        <!-- About Section -->
-        <section id="about" class="py-20">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-4xl font-bold mb-8 text-white text-center">About Me</h2>
-                <div class="bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-700 terminal-window">
-                    <div class="terminal-header flex items-center space-x-2 mb-4">
-                        <span class="w-3 h-3 bg-red-500 rounded-full"></span>
-                        <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
-                        <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-                        <span class="text-gray-400 text-sm ml-auto">bash</span>
+        /* Tag styling */
+        .skill-tag {
+            background-color: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .skill-tag:hover {
+            background-color: rgba(220, 38, 38, 0.2);
+            color: #fca5a5; /* Brighter text on hover */
+        }
+
+        /* Gemini Feature Styling */
+        .gemini-btn {
+            background-color: rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            color: #fca5a5;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .gemini-btn:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+        .gemini-output {
+            background-color: rgba(0,0,0,0.2);
+            border-left: 2px solid var(--accent);
+            padding: 0.75rem;
+            margin-top: 0.75rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .loader {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #FFF;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Main Container -->
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <!-- Main Grid Layout -->
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+
+            <!-- Left Column -->
+            <div class="lg:col-span-1 flex flex-col gap-6">
+                <!-- Profile Window -->
+                <div id="about" class="hypr-window">
+                    <div class="hypr-header">
+                        <p>./profile.sh</p>
                     </div>
-                    <div class="terminal-body">
-                        <pre class="text-emerald-400">ValM@Archbox:~<span class="text-white">$</span> man valm</pre>
-                        <pre class="text-emerald-400">NAME
-       Matthew T. Valdez - Cybersecurity Analyst
-
-SYNOPSIS
-       valm [OPTIONS]
-
-DESCRIPTION
-       A hands-on security and network professional seeking a Cyber Defense or SOC Analyst role. Leveraging 5+ years of experience in high-stakes network operations with a proven ability to use XDR platforms and established incident response protocols to identify, triage, and mitigate emerging threats.
-
-OPTIONS
-       --skills
-           Network Infrastructure, Threat & Vulnerability Management, Security Incident Response, NIST Compliance & Frameworks, Cyber Threat Intelligence (CTI), Log Analysis & Triage, Cisco & Juniper Routers/Switches, Network Protocols (TCP/IP, DNS), Linux/RHEL System Administration, Virtualization (VMware, VirtualBox), Firewall Configuration & Policy.
-
-       --tools
-           SIEM Platforms (e.g., Splunk), Wireshark, Metasploit, Ghidra, Python (Scripting & Automation), SQL, C/C++, Rust, Git, Docker, Atlassian Jira, SolarWinds, Taegis.
-
-       --education
-           Coursework toward Bachelor of Science in Computer Information Systems - University of Houston-Clear Lake; Associate of Arts - Houston Community College.
-
-       --certifications
-           CompTIA Security+ (Valid until Nov 2027); INE eJPT (Currently pursuing); CompTIA PenTest+ (Considering); TCM Security Certs PJPT (Planning to get after eJPT).
-
-       --projects
-           NahamCon 2025 CTF (Placed 484 out of 2,941 - Top 17%): Collaborated with a team in a high-pressure environment to solve challenges in penetration testing, reverse engineering, and network forensics, successfully capturing numerous flags.
-
-AUTHOR
-       Written by Matthew T. Valdez.
-
-BUGS
-       Report bugs to matt.valdez@pm.me.
-
-SEE ALSO
-       github.com/valm23, linkedin.com/in/matttvaldez
-</pre>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Credentials Section -->
-    <section id="credentials" class="py-20">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl font-bold mb-8 text-white">Credentials & Experience</h2>
-            <p class="text-gray-400 mb-12">My professional journey, education, and certifications.</p>
-            <div class="bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-700 terminal-window">
-                <div class="terminal-header flex items-center space-x-2 mb-4">
-                    <span class="w-3 h-3 bg-red-500 rounded-full"></span>
-                    <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
-                    <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-                    <span class="text-gray-400 text-sm ml-auto">ValM@Archbox:~ $ cargo read --manifest-path /etc/credentials.toml</span>
-                </div>
-                <div class="terminal-body">
-                    <pre class="text-emerald-400">
-[education]
-university = "University of Houston-Clear Lake"
-degree = "Coursework toward Bachelor of Science in Computer Information Systems"
-dates = "2016 - 2018"
-
-college = "Houston Community College"
-degree = "Associate of Arts, Liberal Arts and Humanities"
-
-[certifications]
-comptia_security_plus = "COMP001022359134 (Valid until Nov 2027)"
-ine_ejpt = "Currently pursuing"
-comptia_pentest_plus = "Considering"
-tcm_sec_certs_pjpt = "Planning to get after eJPT"
-
-[experience.kinder_morgan_energy_partners]
-company = "Kinder Morgan Energy Partners"
-location = "Houston, TX"
-role = "Network Operations Center (NOC) Tech I"
-dates = "Aug 2018 - Present"
-responsibilities = [
-    "Monitored network and security events using the Taegis XDR platform, performing initial triage on alerts and escalating potential security incidents to the cybersecurity team for response.",
-    "Performed critical triage on all incoming network events and alarms, assessing priority and escalating to the appropriate engineering or security teams.",
-    "Documented and translated complex technical incidents into clear, manageable action items for dispatching field teams and briefing leadership on status and impact.",
-    "Coordinated response efforts by acting as a central communication point between Network Engineering, SCADA Automation, and other departments during network events.",
-    "Provided operational support for over 200 network devices, contributing to overall network stability and uptime."
-]
-
-[experience.trustcomm]
-company = "TrustComm (Now OneWeb)"
-location = "Houston, TX"
-role = "Managed Service Operations Center Tech"
-dates = "May 2017 - May 2018"
-responsibilities = [
-    "Ensured the operational security and integrity of satellite communications for national security, federal, and private sector clients.",
-    "Managed physical and logical access control systems for a secure facility, including assigning RSA tokens and maintaining door and equipment access.",
-    "Took initiative to design and deploy custom web-based monitoring tools, improving remote visibility of network and satellite hardware status.",
-    "Performed hands-on diagnostics and maintenance on military-grade satellite communication systems."
-]
-</pre>
-                <p class="text-gray-300 leading-relaxed mt-4">
-                    <span class="text-emerald-400">ValM@Archbox:~<span class="text-white">$</span></span> <span class="text-gray-400">_</span>
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="py-20">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl font-bold mb-8 text-white">Projects</h2>
-            <p class="text-gray-400 mb-12">Here are some of the things I've built and secured.</p>
-
-            <!-- Grid for Projects -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Project Card 1 -->
-                <div class="bg-gray-900 rounded-xl shadow-lg border border-gray-700 p-6 flex flex-col hover:border-emerald-500 hover:shadow-emerald-500/10 transition-all duration-300 terminal-window">
-                    <div class="terminal-header flex items-center space-x-2 mb-4">
-                        <span class="w-3 h-3 bg-red-500 rounded-full"></span>
-                        <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
-                        <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-                        <span class="text-gray-400 text-sm ml-auto">cat Project_Rust_Hacking.md</span>
-                    </div>
-                    <div class="terminal-body">
-                        <h3 class="text-xl font-bold text-white mb-2">Learning Rust Lang for Ethical Hacking</h3>
-                        <p class="text-gray-400 mb-4 flex-grow">Basically the first few exercises in The Rust Book: Cornell Edition</p>
-                        <div class="mb-4">
-                            <span class="inline-block bg-gray-800 text-emerald-400 text-xs font-mono px-2 py-1 rounded-full mr-2 mb-2">C++ but Zesty</span>
-                            <span class="inline-block bg-gray-800 text-emerald-400 text-xs font-mono px-2 py-1 rounded-full mr-2 mb-2">Fun to obsfucate</span>
-                            <span class="inline-block bg-gray-800 text-emerald-400 text-xs font-mono px-2 py-1 rounded-full mr-2 mb-2">Meme language for srs work</span>
-                        </div>
-                        <div class="mt-auto text-right">
-                            <a href="https://github.com/ValM23/rustlang" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-white font-semibold">Where the wild files are. &rarr;</a>
+                    <div class="hypr-content text-center">
+                        <h1 class="text-2xl font-bold text-white">Matthew T. Valdez</h1>
+                        <p class="font-semibold text-[var(--accent)] mt-1">Cybersecurity & Network Professional</p>
+                        <p class="text-sm text-[var(--text-secondary)] mt-4 max-w-xs mx-auto">
+                            A hands-on security and network professional pivoting from network operations to offensive security. My defensive background provides a unique understanding of enterprise infrastructure, enabling a more effective and insightful approach to identifying vulnerabilities.
+                        </p>
+                        <div class="flex justify-center space-x-4 mt-6">
+                            <a href="https://github.com/valm23" target="_blank" class="text-[var(--text-secondary)] hover:text-white transition-colors">GitHub</a>
+                            <a href="https://linkedin.com/in/matttvaldez" target="_blank" class="text-[var(--text-secondary)] hover:text-white transition-colors">LinkedIn</a>
+                            <a href="mailto:matt.valdez@pm.me" class="text-[var(--text-secondary)] hover:text-white transition-colors">Email</a>
                         </div>
                     </div>
                 </div>
-                <div class="bg-gray-900 rounded-xl shadow-lg border border-gray-700 p-6 flex flex-col hover:border-emerald-500 hover:shadow-emerald-500/10 transition-all duration-300 terminal-window">
-                    <div class="terminal-header flex items-center space-x-2 mb-4">
-                        <span class="w-3 h-3 bg-red-500 rounded-full"></span>
-                        <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
-                        <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-                        <span class="text-gray-400 text-sm ml-auto">cat Project_OSINT_Scraper.md</span>
+                
+                <!-- Skills Window -->
+                <div id="skills" class="hypr-window">
+                    <div class="hypr-header">
+                        <p>ls -l /skills</p>
                     </div>
-                    <div class="terminal-body">
-                        <h3 class="text-xl font-bold text-white mb-2">Osint-Scraper</h3>
-                        <p class="text-gray-400 mb-4 flex-grow">Project inspired and taught by Gemini via the CLI, basically a CLI tool to scrape websites written in Ruby. Stretch Goal is to generate reports on target sites.</p>
-                        <div class="mb-4">
-                            <span class="inline-block bg-gray-800 text-emerald-400 text-xs font-mono px-2 py-1 rounded-full mr-2 mb-2">Educational Purposes Only</span>
-                            <span class="inline-block bg-gray-800 text-emerald-400 text-xs font-mono px-2 py-1 rounded-full mr-2 mb-2">OffSec OSINT</span>
-                            <span class="inline-block bg-gray-800 text-emerald-400 text-xs font-mono px-2 py-1 rounded-full mr-2 mb-2">AI-Copilot</span>
+                    <div class="hypr-content">
+                        <h3 class="font-bold text-white mb-3 text-center">Security</h3>
+                        <div class="flex flex-wrap gap-2 justify-center">
+                            <span class="skill-tag">Incident Response</span>
+                            <span class="skill-tag">Threat & Vuln Mgmt</span>
+                            <span class="skill-tag">CTI</span>
+                            <span class="skill-tag">Malware Analysis</span>
+                            <span class="skill-tag">Log Analysis</span>
+                            <span class="skill-tag">Reverse Engineering</span>
                         </div>
-                        <div class="mt-auto text-right">
-                            <a href="https://github.com/ValM23/osint_scraper" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-white font-semibold">The Rabbit Hole is full of gems&rarr;</a>
+                        <h3 class="font-bold text-white mt-4 mb-3 text-center">Tools</h3>
+                        <div class="flex flex-wrap gap-2 justify-center">
+                             <span class="skill-tag">SIEM (Splunk)</span>
+                             <span class="skill-tag">Taegis XDR</span>
+                             <span class="skill-tag">Wireshark</span>
+                             <span class="skill-tag">Metasploit</span>
+                             <span class="skill-tag">Ghidra</span>
+                             <span class="skill-tag">BurpSuite</span>
+                        </div>
+                        <h3 class="font-bold text-white mt-4 mb-3 text-center">Languages & OS</h3>
+                        <div class="flex flex-wrap gap-2 justify-center">
+                             <span class="skill-tag">Python</span>
+                             <span class="skill-tag">SQL</span>
+                             <span class="skill-tag">Rust</span>
+                             <span class="skill-tag">PowerShell</span>
+                             <span class="skill-tag">Arch Linux</span>
+                             <span class="skill-tag">Debian/Ubuntu</span>
+                             <span class="skill-tag">Kali/ParrotOS</span>
+                             <span class="skill-tag">Git</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="lg:col-span-2 flex flex-col gap-6">
+                <!-- Experience Window -->
+                <div id="experience" class="hypr-window">
+                    <div class="hypr-header">
+                        <p>cat /var/log/career.log</p>
+                    </div>
+                    <div class="hypr-content">
+                        <div class="mb-6">
+                            <h3 class="font-bold text-white">Network Operations Tech I</h3>
+                            <p class="text-sm text-[var(--accent)] font-medium">Kinder Morgan Energy Partners | Aug 2018 – Present</p>
+                            <ul class="list-disc list-inside text-sm text-[var(--text-secondary)] mt-2 space-y-1">
+                                <li>Performed initial triage and analysis of network and security events using Taegis XDR.</li>
+                                <li>Streamlined incident response workflow, enabling faster threat containment.</li>
+                                <li>Coordinated rapid response efforts across multiple engineering departments.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white">Managed Service Operations Center Tech</h3>
+                            <p class="text-sm text-[var(--accent)] font-medium">TrustComm (Now OneWeb) | May 2017 – May 2018</p>
+                             <ul class="list-disc list-inside text-sm text-[var(--text-secondary)] mt-2 space-y-1">
+                                <li>Maintained operational security for sensitive satellite communication systems.</li>
+                                <li>Managed physical and logical access control systems, including RSA token provisioning.</li>
+                                <li>Designed and deployed custom web-based monitoring tools using Python.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
 
-                <!-- Add more project cards here as needed -->
-                <div class="bg-gray-900/50 rounded-xl border border-dashed border-gray-700 p-6 flex items-center justify-center terminal-window">
-                    <div class="terminal-header flex items-center space-x-2 mb-4">
-                        <span class="w-3 h-3 bg-red-500 rounded-full"></span>
-                        <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
-                        <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-                        <span class="text-gray-400 text-sm ml-auto">cat Project_Coming_Soon.md</span>
+                <!-- Projects & Certs Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Projects Window -->
+                    <div id="projects" class="hypr-window">
+                        <div class="hypr-header">
+                            <p>~/Projects</p>
+                        </div>
+                        <div class="hypr-content text-center">
+                            <div class="mb-4">
+                                <h4 class="font-bold text-white">OSINT Document Scraper</h4>
+                                <p class="text-xs text-[var(--text-secondary)] mt-1" data-description="Automates collection of public documents and metadata to aid investigative research.">Automates collection of public documents and metadata to aid investigative research.</p>
+                                <a href="https://github.com/valm23/osint_scraper" target="_blank" class="text-xs text-[var(--accent)] hover:text-white transition-colors mt-2 inline-block">View on GitHub &rarr;</a>
+                                <button class="gemini-btn mt-2" onclick="getProjectDebrief(this, 'OSINT Document Scraper')">✨ Generate Debrief</button>
+                                <div class="gemini-output hidden text-left"></div>
+                            </div>
+                            <div class="border-t border-[var(--border)] my-4"></div>
+                            <div>
+                                <h4 class="font-bold text-white">NahamCon 2025 CTF</h4>
+                                <p class="text-xs text-[var(--text-secondary)] mt-1" data-description="Ranked 486th/1,721 teams. Solved reverse engineering, web exploitation, and OSINT challenges.">Ranked 486th/1,721 teams. Solved RE, web exploitation, and OSINT challenges.</p>
+                                <button class="gemini-btn mt-2" onclick="getProjectDebrief(this, 'NahamCon 2025 CTF')">✨ Generate Debrief</button>
+                                <div class="gemini-output hidden text-left"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="terminal-body">
-                        <p class="text-gray-500">Another project coming soon...</p>
+
+                    <!-- Certifications Window -->
+                    <div id="certs" class="hypr-window">
+                        <div class="hypr-header">
+                            <p>/etc/certs</p>
+                        </div>
+                        <div class="hypr-content text-center">
+                            <div class="mb-3">
+                                <h4 class="font-bold text-white">CompTIA Security+</h4>
+                                <p class="text-xs text-[var(--text-secondary)]">Valid until Nov 2027</p>
+                            </div>
+                             <div class="mb-3">
+                                <h4 class="font-bold text-white">INE eJPT</h4>
+                                <p class="text-xs text-[var(--text-secondary)]">Currently Pursuing</p>
+                            </div>
+                             <div>
+                                <h4 class="font-bold text-white">Associate of Liberal Arts</h4>
+                                <p class="text-xs text-[var(--text-secondary)]">Houston Community College</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-    </section>
-
-    </main>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-bold mb-8 text-white text-center">Connect</h2>
-            <div class="bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-700 terminal-window">
-                <div class="terminal-header flex items-center space-x-2 mb-4">
-                    <span class="w-3 h-3 bg-red-500 rounded-full"></span>
-                    <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
-                    <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-                    <span class="text-gray-400 text-sm ml-auto">ssh valm@portfolio.sh</span>
-                </div>
-                <div class="terminal-body">
-                    <pre class="text-emerald-400">Last login: Tue Jul  1 10:30:00 2025 from 192.168.1.100</pre>
-                    <pre class="text-emerald-400">Welcome to ValM's Secure Shell.</pre>
-                    <pre class="text-emerald-400">To connect, use the following credentials:</pre>
-                    <pre class="text-white mt-4">Username: <span class="text-emerald-400">guest</span></pre>
-                    <pre class="text-white">Password: <span class="text-emerald-400">**********</span></pre>
-                    <pre class="text-emerald-400">ValM@Archbox:~<span class="text-white">$</span> <span class="text-gray-400">cat /etc/contact_info</span></pre>
-                    <pre class="text-white">Matthew T. Valdez</pre>
-                    <pre class="text-emerald-400">ValM@Archbox:~<span class="text-white">$</span> <span class="text-gray-400">cat /etc/contact_info</span></pre>
-                    <pre class="text-white mt-2">
-                        GitHub: <a href="https://github.com/valm23" target="_blank" class="text-blue-400 hover:underline">github.com/valm23</a>
-                        LinkedIn: <a href="https://linkedin.com/in/matttvaldez" target="_blank" class="text-blue-400 hover:underline">linkedin.com/in/matttvaldez</a>
-                        Email: <a href="mailto:matt.valdez@pm.me" class="text-blue-400 hover:underline">matt.valdez@pm.me</a>
-                    </pre>
-                    <pre class="text-emerald-400 mt-4">ValM@Archbox:~<span class="text-white">$</span> <span class="text-gray-400">_</span></pre>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    </section>
-
-    <!-- Resources Section -->
-    <section id="resources" class="py-20">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl font-bold mb-8 text-white">Resources</h2>
-            <p class="text-gray-400 mb-12">A collection of useful tools, articles, and documentation for security analysts.</p>
-            <div class="bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-700 terminal-window">
-                <div class="terminal-header flex items-center space-x-2 mb-4">
-                    <span class="w-3 h-3 bg-red-500 rounded-full"></span>
-                    <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
-                    <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-                    <span class="text-gray-400 text-sm ml-auto">cat /etc/resources</span>
-                </div>
-                <div class="terminal-body">
-                    <pre class="text-emerald-400">ValM@Archbox:~ $ cat /etc/resources
-
-[ TRAINING PLATFORMS ]
-    Hack The Box: <a href="https://www.hackthebox.com/" target="_blank" class="text-blue-400 hover:underline">hackthebox.com</a> - gamified cybersecurity training.
-    TryHackMe: <a href="https://tryhackme.com/" target="_blank" class="text-blue-400 hover:underline">tryhackme.com</a> - guided cybersecurity learning paths.
-    Boot.dev: <a href="https://www.boot.dev/" target="_blank" class="text-blue-400 hover:underline">boot.dev</a> - interactive coding courses for developers.
-
-[ PROGRAMMING & DEVELOPMENT ]
-    The Rust Programming Language Book: <a href="https://doc.rust-lang.org/book/" target="_blank" class="text-blue-400 hover:underline">doc.rust-lang.org/book</a> - official guide to Rust.
-    Go Documentation: <a href="https://go.dev/doc/" target="_blank" class="text-blue-400 hover:underline">go.dev/doc</a> - comprehensive resources for Go.
-    Python Official Docs: <a href="https://docs.python.org/3/" target="_blank" class="text-blue-400 hover:underline">docs.python.org</a> - essential reference for Python.
-
-[ CERTIFICATIONS & KNOWLEDGE BASES ]
-    CompTIA Security+ Official Page: <a href="https://www.comptia.org/certifications/security" target="_blank" class="text-blue-400 hover:underline">comptia.org/security</a> - details on foundational security certification.
-    INE eJPT Certification: <a href="https://ine.com/certifications/ejpt" target="_blank" class="text-blue-400 hover:underline">ine.com/certifications/ejpt</a> - practical penetration testing certification.
-    NIST Cybersecurity Framework: <a href="https://www.nist.gov/cyberframework" target="_blank" class="text-blue-400 hover:underline">nist.gov/cyberframework</a> - guidelines for managing cybersecurity risk.
-
-[ COMMUNITY & NEWS ]
-    (Placeholder for future community links, e.g., forums, blogs, news sites)
-</pre>
-                    <p class="text-gray-300 leading-relaxed mt-4">
-                        <span class="text-emerald-400">ValM@Archbox:~<span class="text-white">$</span></span> <span class="text-gray-400">_</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="text-center py-6 bg-gray-900 border-t border-gray-700/50 text-gray-400">
-        <p>&copy; 2025 Matthew Valdez All Rights Reserved.</p>
-        <p class="text-xs mt-2">Crafted with <span class="text-red-500">&hearts;</span> by Matthew T. Valdez, with design and code assistance from Gemini.</p>
-    </footer>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="text-center py-6 mt-6 text-xs text-[var(--text-secondary)]">
+            <p>&copy; 2025 Matthew Valdez. All Rights Reserved.</p>
+            <p class="mt-1">Crafted with <span class="text-red-500">&hearts;</span> and a little help from AI.</p>
+        </footer>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // --- Typing Effect for Hero Section ---
-            const typedTextSpan = document.getElementById('typed-text');
-            const textArray = ["ValM@Archbox:~ $ yay -S valm-portfolio", "Access Granted: Matthew T. Valdez"];
-            const typingDelay = 100;
-            const erasingDelay = 50;
-            const newTextDelay = 2000; // Delay between current and next text
-            let textArrayIndex = 0;
-            let charIndex = 0;
-
-            function type() {
-                if (charIndex < textArray[textArrayIndex].length) {
-                    if(!typedTextSpan.classList.contains("typing")) typedTextSpan.classList.add("typing");
-                    typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
-                    charIndex++;
-                    setTimeout(type, typingDelay);
-                }
-                else {
-                    typedTextSpan.classList.remove("typing");
-                    setTimeout(erase, newTextDelay);
-                }
-            }
-
-            function erase() {
-                if (charIndex > 0) {
-                    if(!typedTextSpan.classList.contains("erasing")) typedTextSpan.classList.add("erasing");
-                    typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
-                    charIndex--;
-                    setTimeout(erase, erasingDelay);
-                }
-                else {
-                    typedTextSpan.classList.remove("erasing");
-                    textArrayIndex++;
-                    if(textArrayIndex>=textArray.length) textArrayIndex=0;
-                    setTimeout(type, typingDelay + 1100);
-                }
-            }
-
-            if(typedTextSpan && textArray.length) setTimeout(type, newTextDelay + 250);
-
-            // --- Blinking Cursor CSS ---
-            const style = document.createElement('style');
-            style.innerHTML = `
-                .blinking-cursor {
-                    font-weight: 100;
-                    font-size: 2em;
-                    color: #34d399;
-                    -webkit-animation: 1s blink step-end infinite;
-                    -moz-animation: 1s blink step-end infinite;
-                    -ms-animation: 1s blink step-end infinite;
-                    -o-animation: 1s blink step-end infinite;
-                    animation: 1s blink step-end infinite;
-                }
-
-                @keyframes blink {
-                    from, to { opacity: 0; }
-                    50% { opacity: 1; }
-                }
-
-                @-moz-keyframes blink {
-                    from, to { opacity: 0; }
-                    50% { opacity: 1; }
-                }
-
-                @-webkit-keyframes blink {
-                    from, to { opacity: 0; }
-                    50% { opacity: 1; }
-                }
-
-                @-ms-keyframes blink {
-                    from, to { opacity: 0; }
-                    50% { opacity: 1; }
-                }
-
-                @-o-keyframes blink {
-                    from, to { opacity: 0; }
-                    50% { opacity: 1; }
-                }
-            `;
-            document.head.appendChild(style);
-
-            // --- Mobile Menu Toggle ---
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
+        // --- Gemini API Call for Project Debriefs ---
+        async function getProjectDebrief(button, projectName) {
+            const outputDiv = button.nextElementSibling;
+            const description = button.previousElementSibling.previousElementSibling.dataset.description;
             
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
+            // Show loader and disable button
+            button.innerHTML = `<span class="loader"></span>Generating...`;
+            button.disabled = true;
+            outputDiv.classList.add('hidden');
+
+            const userProfile = {
+                name: "Matthew T. Valdez",
+                goal: "Pivoting from a Network Operations role to an Offensive Security/Penetration Tester position.",
+                skills: ["Incident Response", "Threat & Vulnerability Management", "CTI", "Malware Analysis", "Log Analysis", "Reverse Engineering", "NIST Frameworks", "SIEM", "XDR", "Wireshark", "Metasploit", "Ghidra", "BurpSuite", "Python", "Rust", "PowerShell", "Arch Linux", "Kali/ParrotOS"]
+            };
+
+            const prompt = `
+                As a senior offensive security hiring manager, analyze the following project by Matthew T. Valdez. 
+                Write a concise, professional debrief (2-3 sentences) for a technical recruiter. 
+                Highlight how this project demonstrates skills relevant to a penetration testing or red team role.
+                
+                Candidate Profile:
+                - Name: ${userProfile.name}
+                - Career Goal: ${userProfile.goal}
+                - Key Skills: ${userProfile.skills.join(', ')}
+
+                Project Details:
+                - Project Name: ${projectName}
+                - Description: ${description}
+
+                Focus on the practical application of skills and the offensive mindset demonstrated.
+            `;
+
+            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // API key will be provided by the environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            try {
+                // Using fetch with exponential backoff
+                const response = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 });
 
-                // Close mobile menu when a link is clicked
-                const mobileNavLinks = document.querySelectorAll('#mobile-menu .nav-link');
-                mobileNavLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        mobileMenu.classList.add('hidden');
-                    });
-                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    outputDiv.innerText = text;
+                    outputDiv.classList.remove('hidden');
+                } else {
+                    outputDiv.innerText = 'Error: Could not generate debrief. The response was empty.';
+                    outputDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Error fetching from Gemini API:", error);
+                outputDiv.innerText = 'Error: Failed to generate debrief. Please check the console for details.';
+                outputDiv.classList.remove('hidden');
+            } finally {
+                // Restore button
+                button.innerHTML = '✨ Generate Debrief';
+                button.disabled = false;
             }
+        }
 
-            // --- Smooth Scrolling and Active Link Highlighting ---
-            const navLinks = document.querySelectorAll('.nav-link');
-            const sections = document.querySelectorAll('section[id]');
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetSection = document.getElementById(targetId);
-                    if (targetSection) {
-                        window.scrollTo({
-                            top: targetSection.offsetTop - document.getElementById('header').offsetHeight,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href').substring(1) === entry.target.id) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }, {
-                rootMargin: '-50% 0px -50% 0px' // Adjust this to control when the active state changes
-            });
-
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-
-            // --- Header Shadow on Scroll ---
-            const header = document.getElementById('header');
-            if (header) {
-                window.addEventListener('scroll', () => {
-                    if(window.scrollY > 10) {
-                        header.classList.add('shadow-emerald-500/10');
-                    } else {
-                        header.classList.remove('shadow-emerald-500/10');
-                    }
-                });
+        // Fetch with exponential backoff to handle potential rate limiting
+        async function fetchWithBackoff(url, options, retries = 3, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (response.status === 429 && retries > 0) { // 429: Too Many Requests
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                }
+                return response;
+            } catch (error) {
+                if (retries > 0) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                }
+                throw error;
             }
-        });
+        }
     </script>
+
 </body>
 </html>
