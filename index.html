@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matthew T. Valdez | Cybersecurity Portfolio</title>
+    <title>Matthew T. Valdez | Chosen Name: Roxanna T. Valdez | Cybersecurity Portfolio</title>
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23dc2626'%20d='M12%2C2L9%2C5V11L5%2C15V19H9V15L13%2C11V5L16%2C2H12Z'/%3E%3C/svg%3E">
     <!-- Tailwind CSS -->
@@ -197,6 +197,11 @@
                              <span class="skill-tag">Metasploit</span>
                              <span class="skill-tag">Ghidra</span>
                              <span class="skill-tag">BurpSuite</span>
+                             <span class="skill-tag">JIRA</span>
+                             <span class="skill-tag">QEMU</span>
+                             <span class="skill-tag">VirtualBox</span>
+                             <span class="skill-tag">Amazon Web Services</span>
+                             <span class="skill-tag">SolarWinds</span>
                         </div>
                         <h3 class="font-bold text-white mt-4 mb-3 text-center">Languages & OS</h3>
                         <div class="flex flex-wrap gap-2 justify-center">
@@ -254,14 +259,12 @@
                                 <h4 class="font-bold text-white">OSINT Document Scraper</h4>
                                 <p class="text-xs text-[var(--text-secondary)] mt-1" data-description="Automates collection of public documents and metadata to aid investigative research.">Automates collection of public documents and metadata to aid investigative research.</p>
                                 <a href="https://github.com/valm23/osint_scraper" target="_blank" class="text-xs text-[var(--accent)] hover:text-white transition-colors mt-2 inline-block">View on GitHub &rarr;</a>
-                                <button class="gemini-btn mt-2" onclick="getProjectDebrief(this, 'OSINT Document Scraper')">✨ Generate Debrief</button>
-                                <div class="gemini-output hidden text-left"></div>
                             </div>
                             <div class="border-t border-[var(--border)] my-4"></div>
                             <div>
                                 <h4 class="font-bold text-white">NahamCon 2025 CTF</h4>
-                                <p class="text-xs text-[var(--text-secondary)] mt-1" data-description="Ranked 486th/1,721 teams. Solved reverse engineering, web exploitation, and OSINT challenges.">Ranked 486th/1,721 teams. Solved RE, web exploitation, and OSINT challenges.</p>
-                                <button class="gemini-btn mt-2" onclick="getProjectDebrief(this, 'NahamCon 2025 CTF')">✨ Generate Debrief</button>
+                                <p class="text-xs text-[var(--text-secondary)] mt-1" data-description="Ranked 486th/1,721 teams. Solved reverse engineering, web exploitation, and OSINT challenges.">Ranked 486th of 1,709 teams, solving reverse engineering, web exploitation, and OSINT challenges on Team LOlICPIRATES.</p>
+                                <a href="https://ctftime.org/team/385998" target="_blank" class="text-xs text-[var(--accent)] hover:text-white transition-colors mt-2 inline-block">We didn't put our names on the team on CTFTime, as it was my first, but there's video evidence if needed.&rarr;</a>
                                 <div class="gemini-output hidden text-left"></div>
                             </div>
                         </div>
@@ -276,9 +279,10 @@
                             <div class="mb-3">
                                 <h4 class="font-bold text-white">CompTIA Security+</h4>
                                 <p class="text-xs text-[var(--text-secondary)]">Valid until Nov 2027</p>
+                                <a href="https://www.credly.com/badges/75e14b41-2eeb-4e5e-8dbf-37e9471272ff" target="_blank" class="text-xs text-[var(--accent)] hover:text-white transition-colors mt-2 inline-block">View on Credly &rarr;</a>
                             </div>
                              <div class="mb-3">
-                                <h4 class="font-bold text-white">INE eJPT</h4>
+                                <h4 class="font-bold text-white">Hack the Box (HTB) Certified Penetration Testing Specialist</h4>
                                 <p class="text-xs text-[var(--text-secondary)]">Currently Pursuing</p>
                             </div>
                              <div>
@@ -316,7 +320,7 @@
             };
 
             const prompt = `
-                As a senior offensive security hiring manager, analyze the following project by Matthew T. Valdez. 
+                As a senior offensive security hiring manager, analyse the following project by Matthew T. Valdez. 
                 Write a concise, professional debrief (2-3 sentences) for a technical recruiter. 
                 Highlight how this project demonstrates skills relevant to a penetration testing or red team role.
                 
