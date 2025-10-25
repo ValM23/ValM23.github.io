@@ -1,0 +1,1 @@
+Do people actually look at Readme for GitHub Pages?! Hello there. This is placeholder text, or not. Really it's just text you'll only see if you're looking at my mo-flippin read me. WHY ARE YOU DOING THAT?! AYO?! Go to the linkkkkkkkk, that's crazy sauce, man. 
