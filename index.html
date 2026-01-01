@@ -3,35 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matthew T. Valdez | Roxanna T. Valdez | Cybersecurity Portfolio</title>
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23dc2626'%20d='M12%2C2L9%2C5V11L5%2C15V19H9V15L13%2C11V5L16%2C2H12Z'/%3E%3C/svg%3E">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Fira Code -->
+    <title>mtvaldez@security:~$ whoami</title>
+    <meta name="description" content="SOC Analyst, Vulnerability Analyst, and Junior Penetration Tester with 8+ years in mission-critical infrastructure.">
+    
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💀%3C/text%3E%3C/svg%3E">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Custom Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --background: #0d1117;
-            --text-primary: #c9d1d9;
-            --text-secondary: #8b949e;
-            --accent: #dc2626; /* A strong, "red team" red */
-            --surface: rgba(22, 27, 34, 0.7); /* Slightly more opaque for readability */
-            --border: rgba(139, 148, 158, 0.2);
+            --bg: #0c0c0c;
+            --bg-card: #111111;
+            --bg-hover: #1a1a1a;
+            --text: #00ff41;
+            --text-dim: #00aa2a;
+            --text-bright: #44ff77;
+            --accent: #ff3333;
+            --accent-dim: rgba(255, 51, 51, 0.2);
+            --white: #e0e0e0;
+            --gray: #666666;
+            --border: #222222;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Fira Code', monospace;
-            background-color: var(--background);
-            color: var(--text-primary);
-            /* Hexagon background pattern */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='46'%3E%3Cpolygon stroke='%231a202c' stroke-width='1' fill='none' points='20 0 40 11.5 40 34.5 20 46 0 34.5 0 11.5 20 0'/%3E%3C/svg%3E");
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 14px;
+            overflow-x: hidden;
         }
 
-        /* Vignette and Scanline Filter */
+        /* Subtle scanlines */
         body::after {
             content: '';
             position: fixed;
@@ -39,410 +54,922 @@
             left: 0;
             width: 100%;
             height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.1) 2px,
+                rgba(0, 0, 0, 0.1) 4px
+            );
             pointer-events: none;
-            background: 
-                repeating-linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.3) 1px, transparent 3px),
-                radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.4) 100%);
             z-index: 9999;
         }
 
-        /* Hyprland-inspired "Window" Styling */
-        .hypr-window {
-            background-color: var(--surface);
-            backdrop-filter: blur(16px) saturate(120%);
-            -webkit-backdrop-filter: blur(16px) saturate(120%);
-            border: 1px solid var(--border);
-            border-radius: 1rem;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Subtle, professional hover effect */
-        .hypr-window:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(220, 38, 38, 0.15);
+        /* Glow effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0, 255, 65, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: -1;
         }
 
-        .hypr-header {
-            padding: 0.75rem 1.25rem;
+        ::selection {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Terminal Window */
+        .terminal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .terminal:hover {
+            border-color: var(--text-dim);
+        }
+
+        .terminal-header {
+            background: #1a1a1a;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             border-bottom: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            font-weight: 500;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.red { background: #ff5f56; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #27ca40; }
+
+        .terminal-title {
+            margin-left: auto;
+            color: var(--gray);
+            font-size: 0.75rem;
+        }
+
+        .terminal-body {
+            padding: 1.25rem;
+        }
+
+        /* Command Prompt Style */
+        .prompt {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .command {
+            color: var(--white);
+        }
+
+        .output {
+            margin-top: 0.75rem;
+            padding-left: 0;
+        }
+
+        /* Hero Section */
+        .hero-terminal .terminal-body {
+            min-height: 200px;
+        }
+
+        .ascii-name {
+            color: var(--text);
+            font-size: 0.6rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 600px) {
+            .ascii-name {
+                font-size: 0.35rem;
+            }
+        }
+
+        .typing-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background: var(--text);
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .tagline {
+            color: var(--text-dim);
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .tagline strong {
+            color: var(--text);
+        }
+
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            border-color: var(--text);
+            color: var(--text);
+            background: rgba(0, 255, 65, 0.05);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .grid .full-width {
+                grid-column: 1 / -1;
+            }
+        }
+
+        /* Section Headers */
+        .section-cmd {
+            margin-bottom: 1rem;
+        }
+
+        /* Skills - Interactive Tags */
+        .skill-category {
+            margin-bottom: 1.25rem;
+        }
+
+        .skill-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-label {
+            color: var(--gray);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-label::before {
+            content: '>';
+            color: var(--accent);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .skill-tag {
+            padding: 0.3rem 0.6rem;
+            background: transparent;
+            border: 1px solid var(--text-dim);
+            border-radius: 3px;
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            background: var(--text);
+            color: var(--bg);
+            border-color: var(--text);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 255, 65, 0.3);
+        }
+
+        .skill-tag.highlight {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .skill-tag.highlight:hover {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 51, 51, 0.3);
+        }
+
+        /* Experience Timeline */
+        .exp-item {
+            position: relative;
+            padding-left: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-left: 2px solid var(--border);
+        }
+
+        .exp-item:last-child {
+            padding-bottom: 0;
+            border-left-color: transparent;
+        }
+
+        .exp-item::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: var(--bg);
+            border: 2px solid var(--text);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .exp-item:hover::before {
+            background: var(--text);
+            box-shadow: 0 0 15px var(--text);
+        }
+
+        .exp-header {
+            margin-bottom: 0.75rem;
+        }
+
+        .exp-title {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .exp-company {
+            color: var(--accent);
+            font-size: 0.85rem;
+        }
+
+        .exp-date {
+            color: var(--gray);
+            font-size: 0.75rem;
+        }
+
+        .exp-bullets {
+            list-style: none;
+        }
+
+        .exp-bullets li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .exp-bullets li::before {
+            content: '$';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Impact metrics callout */
+        .metric {
+            color: var(--text-bright);
+            font-weight: 600;
+        }
+
+        /* Projects */
+        .project-card {
+            background: rgba(0, 255, 65, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-card:hover {
+            border-color: var(--text-dim);
+            background: rgba(0, 255, 65, 0.05);
+            transform: translateX(5px);
+        }
+
+        .project-name {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .project-meta {
+            color: var(--gray);
+            font-size: 0.7rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-desc {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-link {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .project-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Certifications */
+        .cert-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cert-item:last-child {
+            border-bottom: none;
+        }
+
+        .cert-icon {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--text-dim);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
             flex-shrink: 0;
         }
-        
-        .hypr-content {
-            padding: 1.25rem;
-            overflow-y: auto;
-            flex-grow: 1;
+
+        .cert-info {
+            flex: 1;
         }
 
-        /* Custom Scrollbar for window content */
-        .hypr-content::-webkit-scrollbar { width: 6px; }
-        .hypr-content::-webkit-scrollbar-track { background: transparent; }
-        .hypr-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-        .hypr-content::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-
-        /* Tag styling */
-        .skill-tag {
-            background-color: rgba(220, 38, 38, 0.1);
-            border: 1px solid rgba(220, 38, 38, 0.2);
-            color: var(--accent);
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.8rem;
+        .cert-name {
+            color: var(--white);
+            font-size: 0.85rem;
             font-weight: 500;
-            transition: all 0.2s ease;
-        }
-        .skill-tag:hover {
-            background-color: rgba(220, 38, 38, 0.2);
-            color: #fca5a5; /* Brighter text on hover */
         }
 
-        /* Gemini Feature Styling */
-        .gemini-btn {
-            background-color: rgba(220, 38, 38, 0.15);
-            border: 1px solid rgba(220, 38, 38, 0.3);
-            color: #fca5a5;
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.5rem;
+        .cert-detail {
+            color: var(--gray);
             font-size: 0.75rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            cursor: pointer;
         }
-        .gemini-btn:hover {
-            background-color: var(--accent);
+
+        .cert-status {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+        }
+
+        .cert-status.active {
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--text);
+            border: 1px solid var(--text-dim);
+        }
+
+        .cert-status.progress {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        /* CTA Section */
+        .cta-box {
+            background: linear-gradient(135deg, rgba(255, 51, 51, 0.1) 0%, rgba(0, 255, 65, 0.05) 100%);
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            padding: 1.5rem;
+        }
+
+        .cta-title {
+            color: var(--white);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-text {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--accent);
+            border: none;
+            border-radius: 4px;
             color: white;
-        }
-        .gemini-output {
-            background-color: rgba(0,0,0,0.2);
-            border-left: 2px solid var(--accent);
-            padding: 0.75rem;
-            margin-top: 0.75rem;
-            border-radius: 0 0.5rem 0.5rem 0;
+            text-decoration: none;
             font-size: 0.8rem;
-            color: var(--text-secondary);
+            font-family: inherit;
+            transition: all 0.2s ease;
         }
-        .loader {
-            width: 16px;
-            height: 16px;
-            border: 2px solid #FFF;
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            display: inline-block;
-            box-sizing: border-box;
-            animation: rotation 1s linear infinite;
-            margin-right: 0.5rem;
+
+        .cta-btn:hover {
+            background: #ff5555;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.4);
+            transform: translateY(-2px);
         }
-        @keyframes rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        .cta-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--text-dim);
+            color: var(--text);
+        }
+
+        .cta-btn.secondary:hover {
+            border-color: var(--text);
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--gray);
+            font-size: 0.75rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--text-dim);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--text);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .terminal {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .terminal:nth-child(2) { animation-delay: 0.1s; }
+        .terminal:nth-child(3) { animation-delay: 0.2s; }
+        .terminal:nth-child(4) { animation-delay: 0.3s; }
+
+        /* Glitch effect on hover for name */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch:hover {
+            animation: glitch 0.3s ease;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(2px, 2px); }
+        }
+
+        /* Collapsible sections for mobile */
+        .collapsible-toggle {
+            display: none;
+        }
+
+        @media (max-width: 767px) {
+            .collapsible-toggle {
+                display: block;
+                width: 100%;
+                background: transparent;
+                border: none;
+                color: var(--text);
+                font-family: inherit;
+                font-size: 0.8rem;
+                padding: 0.5rem;
+                cursor: pointer;
+                text-align: left;
+            }
+
+            .collapsible-toggle::after {
+                content: ' [+]';
+                color: var(--accent);
+            }
+
+            .collapsible-toggle.active::after {
+                content: ' [-]';
+            }
+
+            .collapsible-content {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+
+            .collapsible-content.show {
+                max-height: 2000px;
+            }
         }
     </style>
 </head>
-<body class="antialiased">
-
-    <!-- Main Container -->
-    <div class="container mx-auto p-4 md:p-8">
-        
-        <!-- Main Grid Layout -->
-        <main class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
-
-            <!-- Left Column -->
-            <div class="lg:col-span-1 flex flex-col gap-4">
-                <!-- Profile Window -->
-                <div id="about" class="hypr-window">
-                    <div class="hypr-header">
-                        <p>./profile.sh</p>
-                    </div>
-                    <div class="hypr-content text-center">
-                        <h1 class="text-2xl font-bold text-white">Matthew T. Valdez</h1>
-                        <p class="text-xs text-[var(--text-secondary)] mt-1">(AKA Roxy)</p>
-                        <p class="font-semibold text-[var(--accent)] mt-3">Cybersecurity & Network Professional</p>
-                        <p class="text-sm text-[var(--text-secondary)] mt-4 max-w-xs mx-auto">
-                            OffSec Professional who knows where the locks are because her experience involved knowing where the doors are.
-                        </p>
-                        <div class="flex justify-center space-x-4 mt-6">
-                            <a href="https://github.com/valm23" target="_blank" class="text-[var(--text-secondary)] hover:text-white transition-colors">GitHub</a>
-                            <a href="https://linkedin.com/in/matttvaldez" target="_blank" class="text-[var(--text-secondary)] hover:text-white transition-colors">LinkedIn</a>
-                            <a href="mailto:matt.valdez@pm.me" class="text-[var(--text-secondary)] hover:text-white transition-colors">Email</a>
-                        </div>
-                    </div>
+<body>
+    <div class="container">
+        <!-- Hero Terminal -->
+        <div class="terminal hero-terminal">
+            <div class="terminal-header">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+                <span class="terminal-title">mtvaldez@security:~</span>
+            </div>
+            <div class="terminal-body">
+                <pre class="ascii-name glitch">
+███╗   ███╗████████╗██╗   ██╗ █████╗ ██╗     ██████╗ ███████╗███████╗
+████╗ ████║╚══██╔══╝██║   ██║██╔══██╗██║     ██╔══██╗██╔════╝╚══███╔╝
+██╔████╔██║   ██║   ██║   ██║███████║██║     ██║  ██║█████╗    ███╔╝ 
+██║╚██╔╝██║   ██║   ╚██╗ ██╔╝██╔══██║██║     ██║  ██║██╔══╝   ███╔╝  
+██║ ╚═╝ ██║   ██║    ╚████╔╝ ██║  ██║███████╗██████╔╝███████╗███████╗
+╚═╝     ╚═╝   ╚═╝     ╚═══╝  ╚═╝  ╚═╝╚══════╝╚═════╝ ╚══════╝╚══════╝</pre>
+                
+                <div class="typing-line">
+                    <span class="prompt">root@hiring:~$</span>&nbsp;
+                    <span class="command">cat /etc/profession</span>
+                    <span class="cursor"></span>
                 </div>
                 
-                <!-- Skills Window -->
-                <div id="skills" class="hypr-window">
-                    <div class="hypr-header">
-                        <p>ls -l /skills</p>
+                <div class="output">
+                    <p style="color: var(--white); font-size: 1.1rem; font-weight: 600;">
+                        SOC Analyst • Vulnerability Analyst • Junior Pentester
+                    </p>
+                </div>
+
+                <p class="tagline">
+                    <strong>8 years</strong> defending critical infrastructure. Now learning to <strong style="color: var(--accent);">break it</strong>.
+                </p>
+
+                <div class="nav-links">
+                    <a href="mailto:matt.valdez@pm.me" class="nav-link">📧 matt.valdez@pm.me</a>
+                    <a href="https://linkedin.com/in/matttvaldez" target="_blank" class="nav-link">💼 LinkedIn</a>
+                    <a href="https://github.com/valm23" target="_blank" class="nav-link">🐙 GitHub</a>
+                    <a href="tel:361-548-7182" class="nav-link">📍 Houston, TX</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid">
+            <!-- Experience - Full Width -->
+            <div class="terminal full-width">
+                <div class="terminal-header">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="terminal-title">experience.log</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="section-cmd">
+                        <span class="prompt">$</span> <span class="command">tail -f /var/log/career.log</span>
                     </div>
-                    <div class="hypr-content">
-                        <h3 class="font-bold text-white mb-3 text-center">Security</h3>
-                        <div class="flex flex-wrap gap-2 justify-center">
-                            <span class="skill-tag">Incident Response</span>
-                            <span class="skill-tag">Threat & Vuln Mgmt</span>
-                            <span class="skill-tag">CTI</span>
-                            <span class="skill-tag">Malware Analysis</span>
-                            <span class="skill-tag">Log Analysis</span>
+
+                    <div class="exp-item">
+                        <div class="exp-header">
+                            <div class="exp-title">Network Operations Technician I</div>
+                            <div class="exp-company">Kinder Morgan Energy Partners</div>
+                            <div class="exp-date">Aug 2018 – Sept 2025 • Houston, TX</div>
+                        </div>
+                        <ul class="exp-bullets">
+                            <li>First eyes on <span class="metric">50+ daily security alerts</span> via Taegis XDR—identified true positives, killed false positives, escalated threats before they spread.</li>
+                            <li>Owned incident triage for <span class="metric">200+ endpoints</span> across critical energy infrastructure. SLA compliance wasn't optional.</li>
+                            <li>Bridged the gap between SOC, engineering, vendors, and field teams during high-pressure outages. Calm under chaos.</li>
+                            <li>Wrote incident reports that leadership actually read—translated technical findings into actionable security improvements.</li>
+                        </ul>
+                    </div>
+
+                    <div class="exp-item">
+                        <div class="exp-header">
+                            <div class="exp-title">Freelance Infrastructure Consultant</div>
+                            <div class="exp-company">Self-Employed</div>
+                            <div class="exp-date">May 2020 – Present</div>
+                        </div>
+                        <ul class="exp-bullets">
+                            <li>Deployed self-hosted GitLab on Ubuntu Server + Tailscale VPN. Secure CI/CD without the cloud dependency.</li>
+                            <li>Migrated legacy WordPress sites to modern hosting—cut costs, improved uptime, hardened attack surface.</li>
+                            <li>Built Supabase backends with proper auth and row-level security. Because "admin/admin" isn't a password policy.</li>
+                        </ul>
+                    </div>
+
+                    <div class="exp-item">
+                        <div class="exp-header">
+                            <div class="exp-title">MSOC Technician</div>
+                            <div class="exp-company">TrustComm (Now OneWeb)</div>
+                            <div class="exp-date">May 2017 – May 2018 • Houston, TX</div>
+                        </div>
+                        <ul class="exp-bullets">
+                            <li>Monitored <span class="metric">classified satellite comms</span> for defense clients. Anomalies meant something here.</li>
+                            <li>Managed RSA token lifecycle and access controls in an environment where "least privilege" was enforced, not suggested.</li>
+                            <li>Restored secure communications during outages alongside National Guard teams. 24/7 readiness, zero excuses.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="terminal">
+                <div class="terminal-header">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="terminal-title">skills.conf</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="section-cmd">
+                        <span class="prompt">$</span> <span class="command">cat ~/.skills</span>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-label">Offensive</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag highlight">Pentesting</span>
+                            <span class="skill-tag highlight">OSINT</span>
+                            <span class="skill-tag highlight">Web Exploitation</span>
+                            <span class="skill-tag">Vuln Discovery</span>
+                            <span class="skill-tag">CTF Workflow</span>
                             <span class="skill-tag">Reverse Engineering</span>
-                            <span class="skill-tag">OSINT</span>
-                            <span class="skill-tag">Social Engineering</span>
                         </div>
-                        <h3 class="font-bold text-white mt-4 mb-3 text-center">Tools</h3>
-                        <div class="flex flex-wrap gap-2 justify-center">
-                             <span class="skill-tag">SIEM (Splunk)</span>
-                             <span class="skill-tag">Taegis XDR</span>
-                             <span class="skill-tag">Wireshark</span>
-                             <span class="skill-tag">Metasploit</span>
-                             <span class="skill-tag">Ghidra</span>
-                             <span class="skill-tag">BurpSuite</span>
-                             <span class="skill-tag">JIRA</span>
-                             <span class="skill-tag">QEMU</span>
-                             <span class="skill-tag">VirtualBox</span>
-                             <span class="skill-tag">Amazon Web Services</span>
-                             <span class="skill-tag">SolarWinds</span>
-                             <span class="skill-tag">Docker</span>
-                             <span class="skill-tag">nmap</span>
-                             <span class="skill-tag">sqlmap</span>
-                             <span class="skill-tag">Supabase</span>
-                             <span class="skill-tag">Web Hosting</span>
-                             <span class="skill-tag">WSL2</span>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-label">Defensive</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Incident Triage</span>
+                            <span class="skill-tag">Threat Detection</span>
+                            <span class="skill-tag">Alert Enrichment</span>
+                            <span class="skill-tag">Log Analysis</span>
+                            <span class="skill-tag">Malware Analysis</span>
                         </div>
-                        <h3 class="font-bold text-white mt-4 mb-3 text-center">Languages & OS</h3>
-                        <div class="flex flex-wrap gap-2 justify-center">
-                             <span class="skill-tag">Python</span>
-                             <span class="skill-tag">SQL</span>
-                             <span class="skill-tag">Rust</span>
-                             <span class="skill-tag">PowerShell</span>
-                             <span class="skill-tag">Arch Linux</span>
-                             <span class="skill-tag">Debian/Ubuntu</span>
-                             <span class="skill-tag">Kali/ParrotOS</span>
-                             <span class="skill-tag">Git</span>
-                             <span class="skill-tag">Bash</span>
-                             <span class="skill-tag">Ruby</span>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-label">Arsenal</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Taegis XDR</span>
+                            <span class="skill-tag">Splunk</span>
+                            <span class="skill-tag">Wireshark</span>
+                            <span class="skill-tag">Burp Suite</span>
+                            <span class="skill-tag">Nmap</span>
+                            <span class="skill-tag">Metasploit</span>
+                            <span class="skill-tag">Ghidra</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-label">Languages</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Bash</span>
+                            <span class="skill-tag">PowerShell</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">Ruby</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Column -->
-            <div class="lg:col-span-2 flex flex-col gap-4">
-                <!-- Experience Window -->
-                <div id="experience" class="hypr-window">
-                    <div class="hypr-header">
-                        <p>cat /var/log/career.log</p>
+            <!-- Certifications -->
+            <div class="terminal">
+                <div class="terminal-header">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="terminal-title">credentials.db</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="section-cmd">
+                        <span class="prompt">$</span> <span class="command">SELECT * FROM certs;</span>
                     </div>
-                    <div class="hypr-content">
-                        <div class="mb-6">
-                            <h3 class="font-bold text-white">Founder & Content Strategist</h3>
-                            <p class="text-sm text-[var(--accent)] font-medium">Independent Media Channel | May 2020 – Present</p>
-                            <ul class="list-disc list-inside text-sm text-[var(--text-secondary)] mt-2 space-y-1">
-                                <li>Co-founded a niche media venture, scaling to a community of 500+ members in under a year.</li>
-                                <li>Define and direct the creative "style" and "lore" for all content and branding.</li>
-                                <li>Administer full-stack web infrastructure, including web hosting (migrated WP to Hostinger) and remote database setup (Supabase).</li>
-                                <li>Lead stream orchestration and multimedia equipment management across multiple platforms.</li>
-                                <li>Manage technical projects, including the deployment of a self-hosted GitLab instance on Ubuntu Server with Tailscale for secure access.</li>
-                            </ul>
+
+                    <div class="cert-item">
+                        <div class="cert-icon">🛡️</div>
+                        <div class="cert-info">
+                            <div class="cert-name">CompTIA Security+</div>
+                            <div class="cert-detail">Valid through Nov 2027</div>
                         </div>
-                        <div class="mb-6">
-                            <h3 class="font-bold text-white">Network Operations Tech I</h3>
-                            <p class="text-sm text-[var(--accent)] font-medium">Kinder Morgan Energy Partners | Aug 2018 – Sept 2025</p>
-                            <ul class="list-disc list-inside text-sm text-[var(--text-secondary)] mt-2 space-y-1">
-                                <li>Performed initial triage and analysis of network and security events using Taegis XDR.</li>
-                                <li>Streamlined incident response workflow, enabling faster threat containment.</li>
-                                <li>Coordinated rapid response efforts across multiple engineering departments.</li>
-                            </ul>
+                        <span class="cert-status active">ACTIVE</span>
+                    </div>
+
+                    <div class="cert-item">
+                        <div class="cert-icon">💀</div>
+                        <div class="cert-info">
+                            <div class="cert-name">HTB CPTS</div>
+                            <div class="cert-detail">Hack The Box</div>
                         </div>
-                        <div class="mb-6">
-                            <h3 class="font-bold text-white">Managed Service Operations Center Tech</h3>
-                            <p class="text-sm text-[var(--accent)] font-medium">TrustComm (Now OneWeb) | May 2017 – May 2018</p>
-                             <ul class="list-disc list-inside text-sm text-[var(--text-secondary)] mt-2 space-y-1">
-                                <li>Maintained operational security for sensitive satellite communication systems.</li>
-                                <li>Managed physical and logical access control systems, including RSA token provisioning.</li>
-                                <li>Designed and deployed custom web-based monitoring tools using Python.</li>
-                            </ul>
+                        <span class="cert-status progress">IN PROGRESS</span>
+                    </div>
+
+                    <div class="cert-item">
+                        <div class="cert-icon">🎓</div>
+                        <div class="cert-info">
+                            <div class="cert-name">Associate of Arts</div>
+                            <div class="cert-detail">Houston Community College</div>
                         </div>
-                        <div class="mb-6">
-                            <h3 class="font-bold text-white">Apple Whole-Unit Repair Technician</h3>
-                            <p class="text-sm text-[var(--accent)] font-medium">CSAT Solutions LP | Oct 2016 – Mar 2017</p>
-                             <ul class="list-disc list-inside text-sm text-[var(--text-secondary)] mt-2 space-y-1">
-                                <li>Conducted hardware-level diagnostics and fault analysis on MacBook Pro units.</li>
-                                <li>Performed system testing and quality assurance on repaired devices, ensuring adherence to strict operational standards.</li>
-                             </ul>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-white">Sales Advisor</h3>
-                            <p class="text-sm text-[var(--accent)] font-medium">Club Demonstration Services | Nov 2015 – Feb 2017</p>
-                             <ul class="list-disc list-inside text-sm text-[var(--text-secondary)] mt-2 space-y-1">
-                                <li>Communicated product benefits to a non-technical audience, developing skills in persuasion and public-facing engagement.</li>
-                                <li>Managed product and equipment logistics, requiring attention to detail and inventory control.</li>
-                            </ul>
-                        </div>
+                        <span class="cert-status active">COMPLETED</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- Projects & Certs Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Projects Window -->
-                    <div id="projects" class="hypr-window">
-                        <div class="hypr-header">
-                            <p>~/Projects</p>
-                        </div>
-                        <div class="hypr-content text-center">
-                            <div class="mb-4">
-                                <h4 class="font-bold text-white">OSINT Document Scraper</h4>
-                                <p class="text-xs text-[var(--text-secondary)] mt-1" data-description="Automates collection of public documents and metadata to aid investigative research.">Automates collection of public documents and metadata to aid investigative research.</p>
-                                <a href="https://github.com/valm23/osint_scraper" target="_blank" class="text-xs text-[var(--accent)] hover:text-white transition-colors mt-2 inline-block">View on GitHub &rarr;</a>
-                            </div>
-                            <div class="border-t border-[var(--border)] my-4"></div>
-                            <div class="mb-4">
-                                <h4 class="font-bold text-white">NahamCon 2025 CTF</h4>
-                                <p class="text-xs text-[var(--text-secondary)] mt-1" data-description="Ranked 486th/1,721 teams. Solved reverse engineering, web exploitation, and OSINT challenges.">Placed in top 28% (486th/1,709 teams) in a global CTF. Solved challenges in reverse engineering, web exploitation, and OSINT.</p>
-                                <a href="https://ctftime.org/team/385998" target="_blank" class="text-xs text-[var(--accent)] hover:text-white transition-colors mt-2 inline-block">View Team Page &rarr;</a>
-                            </div>
-                            <div class="border-t border-[var(--border)] my-4"></div>
-                            <div>
-                                <h4 class="font-bold text-white">SonicPi-Stenographic-Encoder</h4>
-                                <p class="text-xs text-[var(--text-secondary)] mt-1" data-description="A PoC in Ruby that converts data into musical notes, creating a song via Sonic Pi as a novel stanay method.">A PoC in Ruby that converts data into musical notes, creating a song via Sonic Pi as a novel steganography method.</p>
-                                <a href="https://github.com/ValM23/SonicPi-Stenographic-Encoder" target="_blank" class="text-xs text-[var(--accent)] hover:text-white transition-colors mt-2 inline-block">View on GitHub &rarr;</a>
-                                <div class="gemini-output hidden text-left"></div>
-                            </div>
-                        </div>
+            <!-- Projects - Full Width -->
+            <div class="terminal full-width">
+                <div class="terminal-header">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="terminal-title">~/projects</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="section-cmd">
+                        <span class="prompt">$</span> <span class="command">ls -la ~/projects/</span>
                     </div>
 
-                    <!-- Certifications Window -->
-                    <div id="certs" class="hypr-window">
-                        <div class="hypr-header">
-                            <p>/etc/certs</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div class="project-card">
+                            <div class="project-name">🏆 NahamCon 2025 CTF</div>
+                            <div class="project-meta">Rank 486/1,709 • Top 30% Globally</div>
+                            <div class="project-desc">
+                                Competed against 1,700+ teams. Solved challenges in reverse engineering, web exploitation, and OSINT using Ghidra, Burp Suite, and custom Python scripts.
+                            </div>
+                            <a href="https://ctftime.org/team/385998" target="_blank" class="project-link">→ CTFtime Profile</a>
                         </div>
-                        <div class="hypr-content text-center">
-                            <div class="mb-3">
-                                <h4 class="font-bold text-white">CompTIA Security+</h4>
-                                <p class="text-xs text-[var(--text-secondary)]">Valid until Nov 2027</p>
-                                <a href="https://www.credly.com/badges/75e14b41-2eeb-4e5e-8dbf-37e9471272ff" target="_blank" class="text-xs text-[var(--accent)] hover:text-white transition-colors mt-2 inline-block">View on Credly &rarr;</a>
+
+                        <div class="project-card">
+                            <div class="project-name">🔍 OSINT Document Scraper</div>
+                            <div class="project-meta">Python • Active Development</div>
+                            <div class="project-desc">
+                                Automated reconnaissance tool that harvests documents and metadata from public sources. Built for investigative workflows.
                             </div>
-                             <div class="mb-3">
-                                <h4 class="font-bold text-white">Hack the Box (HTB) Certified Penetration Testing Specialist</h4>
-                                <p class="text-xs text-[var(--text-secondary)]">Currently Pursuing</p>
+                            <a href="https://github.com/valm23/osint_scraper" target="_blank" class="project-link">→ View Source</a>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-name">🎵 Sonic Pi Stego Encoder</div>
+                            <div class="project-meta">Ruby • 2024</div>
+                            <div class="project-desc">
+                                Proof-of-concept: hide data inside music. Converts binary to musical notes via Sonic Pi. Creative exfiltration demo.
                             </div>
-                             <div>
-                                <h4 class="font-bold text-white">Associate of Liberal Arts</h4>
-                                <p class="text-xs text-[var(--text-secondary)]">Houston Community College</p>
-                            </div>
+                            <a href="https://github.com/ValM23/SonicPi-Stenographic-Encoder" target="_blank" class="project-link">→ View Source</a>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-        
-        <!-- Footer -->
-        <footer class="text-center py-6 mt-4 text-xs text-[var(--text-secondary)]">
-            <p>&copy; 2025 Matthew Valdez. All Rights Reserved.</p>
-            <p class="mt-1">Crafted with <span class="text-red-500">&hearts;</span> and a little help from AI.</p>
+
+            <!-- CTA -->
+            <div class="terminal full-width">
+                <div class="terminal-header">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="terminal-title">README.md</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="cta-box">
+                        <h2 class="cta-title">Ready to make the jump.</h2>
+                        <p class="cta-text">
+                            I've spent 8 years learning how systems work—and fail—under pressure. 
+                            Now I'm focused on finding the vulnerabilities before the bad actors do. 
+                            Looking for <strong style="color: var(--text);">SOC Analyst</strong>, 
+                            <strong style="color: var(--text);">Vulnerability Analyst</strong>, or 
+                            <strong style="color: var(--accent);">Junior Pentester</strong> roles where I can apply 
+                            defensive experience to offensive problems.
+                        </p>
+                        <div class="cta-links">
+                            <a href="mailto:matt.valdez@pm.me" class="cta-btn">📧 Let's Talk</a>
+                            <a href="https://linkedin.com/in/matttvaldez" target="_blank" class="cta-btn secondary">💼 LinkedIn</a>
+                            <a href="https://github.com/valm23" target="_blank" class="cta-btn secondary">🐙 GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Matthew T. Valdez • Built with caffeine and spite</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="https://www.credly.com/badges/75e14b41-2eeb-4e5e-8dbf-37e9471272ff" target="_blank">Verify Security+ →</a>
+            </p>
         </footer>
     </div>
 
     <script>
-        // --- Gemini API Call for Project Debriefs ---
-        // NOTE: This feature is currently disabled on the UI to keep the project descriptions clean.
-        // The logic remains here for future use.
-        async function getProjectDebrief(button, projectName) {
-            const outputDiv = button.nextElementSibling;
-            const description = button.previousElementSibling.previousElementSibling.dataset.description;
+        // Typing effect for command line
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add subtle parallax to terminals on scroll
+            const terminals = document.querySelectorAll('.terminal');
             
-            // Show loader and disable button
-            button.innerHTML = `<span class="loader"></span>Generating...`;
-            button.disabled = true;
-            outputDiv.classList.add('hidden');
-
-            const userProfile = {
-                name: "Roxanna T. Valdez",
-                goal: "Pivoting from a Network Operations role to an Offensive Security/Penetration Tester position.",
-                skills: ["Incident Response", "Threat & Vulnerability Management", "CTI", "Malware Analysis", "Log Analysis", "Reverse Engineering", "OSINT", "Social Engineering", "SIEM", "XDR", "Wireshark", "Metasploit", "Ghidra", "BurpSuite", "Python", "Rust", "PowerShell", "Ruby", "Bash", "Arch Linux", "Kali/ParrotOS"]
-            };
-
-            const prompt = `
-                As a senior offensive security hiring manager, analyse the following project by Roxanna T. Valdez. 
-                Write a concise, professional debrief (2-3 sentences) for a technical recruiter. 
-                Highlight how this project demonstrates skills relevant to a penetration testing or red team role.
-                
-                Candidate Profile:
-                - Name: ${userProfile.name}
-                - Career Goal: ${userProfile.goal}
-                - Key Skills: ${userC.skills.join(', ')}
-
-                Project Details:
-                - Project Name: ${projectName}
-                - Description: ${description}
-
-                Focus on the practical application of skills and the offensive mindset demonstrated.
-            `;
-
-            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-            const payload = { contents: chatHistory };
-            const apiKey = ""; // API key will be provided by the environment
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
-            try {
-                // Using fetch with exponential backoff
-                const response = await fetchWithBackoff(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
                 });
+            }, { threshold: 0.1 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+            terminals.forEach(terminal => {
+                observer.observe(terminal);
+            });
 
-                const result = await response.json();
+            // Easter egg: Konami code
+            let konamiCode = [];
+            const konamiPattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+            
+            document.addEventListener('keydown', (e) => {
+                konamiCode.push(e.key);
+                konamiCode = konamiCode.slice(-10);
                 
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-                    outputDiv.innerText = text;
-                    outputDiv.classList.remove('hidden');
-                } else {
-                    outputDiv.innerText = 'Error: Could not generate debrief. The response was empty.';
-                    outputDiv.classList.remove('hidden');
+                if (konamiCode.join(',') === konamiPattern.join(',')) {
+                    document.body.style.setProperty('--text', '#ff00ff');
+                    document.body.style.setProperty('--text-dim', '#aa00aa');
+                    document.body.style.setProperty('--text-bright', '#ff66ff');
+                    alert('🎮 HACKER MODE ACTIVATED');
                 }
-            } catch (error) {
-                console.error("Error fetching from Gemini API:", error);
-                outputDiv.innerText = 'Error: Failed to generate debrief. Please check the console for details.';
-                outputDiv.classList.remove('hidden');
-
-            } finally {
-                // Restore button
-                button.innerHTML = '✨ Generate Debrief';
-                button.disabled = false;
-            }
-        }
-
-        // Fetch with exponential backoff to handle potential rate limiting
-        async function fetchWithBackoff(url, options, retries = 3, delay = 1000) {
-            try {
-                const response = await fetch(url, options);
-                if (response.status === 429 && retries > 0) { // 429: Too Many Requests
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    return fetchWithBackoff(url, options, retries - 1, delay * 2);
-                }
-                return response;
-            } catch (error) {
-                if (retries > 0) {
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    return fetchWithBackoff(url, options, retries - 1, delay * 2);
-                }
-                throw error;
-            }
-        }
+            });
+        });
     </script>
-
 </body>
 </html>
-
-
