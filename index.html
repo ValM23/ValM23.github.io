@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mtvaldez@security:~$ whoami</title>
-    <meta name="description" content="SOC Analyst, Vulnerability Analyst, and Junior Penetration Tester with 8+ years in mission-critical infrastructure.">
+    <meta name="description" content="SOC Analyst, Detection Engineer, and Security Researcher with 8+ years in critical infrastructure operations and offensive security research.">
     
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💀%3C/text%3E%3C/svg%3E">
     
@@ -14,17 +14,22 @@
     
     <style>
         :root {
-            --bg: #0c0c0c;
-            --bg-card: #111111;
-            --bg-hover: #1a1a1a;
-            --text: #00ff41;
-            --text-dim: #00aa2a;
-            --text-bright: #44ff77;
+            --bg: #0a0e1a;
+            --bg-card: rgba(12, 20, 38, 0.15);
+            --bg-card-hover: rgba(12, 20, 38, 0.10);
+            --bg-hover: rgba(18, 28, 50, 0.14);
+            --text: #4aeadc;
+            --text-dim: #2a9e94;
+            --text-bright: #7af5ea;
             --accent: #ff3333;
-            --accent-dim: rgba(255, 51, 51, 0.2);
+            --accent-dim: rgba(255, 51, 51, 0.15);
             --white: #e0e0e0;
-            --gray: #666666;
-            --border: #222222;
+            --gray: #888888;
+            --border: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.22);
+            --glass-border-hover: rgba(74, 234, 220, 0.35);
+            --glass-blur: 28px;
+            --card-radius: 18px;
         }
 
         * {
@@ -39,14 +44,44 @@
 
         body {
             font-family: 'JetBrains Mono', monospace;
-            background: var(--bg);
+            background-color: var(--bg);
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px 256px;
             color: var(--text);
             line-height: 1.6;
             font-size: 14px;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Subtle scanlines */
+        /* ── Ambient background orbs — large, colorful, visible through glass ── */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 900px 650px at 12% 8%, rgba(0, 240, 252, 0.20) 0%, transparent 70%),
+                radial-gradient(ellipse 700px 700px at 88% 20%, rgba(180, 74, 255, 0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 1000px 750px at 45% 55%, rgba(30, 64, 175, 0.22) 0%, transparent 70%),
+                radial-gradient(ellipse 600px 550px at 82% 82%, rgba(255, 150, 180, 0.16) 0%, transparent 70%),
+                radial-gradient(ellipse 700px 500px at 18% 85%, rgba(0, 240, 252, 0.14) 0%, transparent 70%);
+            animation: orbFloat 25s ease-in-out infinite;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(18px, -25px); }
+            50% { transform: translate(-12px, 18px); }
+            75% { transform: translate(22px, 12px); }
+        }
+
+        /* Subtle scanlines — reduced opacity */
         body::after {
             content: '';
             position: fixed;
@@ -58,24 +93,11 @@
                 0deg,
                 transparent,
                 transparent 2px,
-                rgba(0, 0, 0, 0.1) 2px,
-                rgba(0, 0, 0, 0.1) 4px
+                rgba(0, 0, 0, 0.03) 2px,
+                rgba(0, 0, 0, 0.03) 4px
             );
             pointer-events: none;
             z-index: 9999;
-        }
-
-        /* Glow effect */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at 50% 0%, rgba(0, 255, 65, 0.05) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: -1;
         }
 
         ::selection {
@@ -86,30 +108,85 @@
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 2.5rem 1.5rem;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Terminal Window */
+        /* ═══════════════════════════════════════════════════
+           FLOATING CARD — Enhanced Glassmorphism
+           ═══════════════════════════════════════════════════ */
         .terminal {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
+            background-color: var(--bg-card);
+            background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, transparent 35%, rgba(0, 0, 0, 0.06) 100%);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-top-color: rgba(255, 255, 255, 0.20);
+            border-radius: var(--card-radius);
+            margin-bottom: 2.5rem;
             overflow: hidden;
-            transition: border-color 0.3s ease;
+            position: relative;
+
+            /* Entrance animation initial state — JS IntersectionObserver reveals these */
+            opacity: 0;
+            transform: translateY(40px);
+            top: 0;
+
+            /* Smooth entrance + hover transitions */
+            transition:
+                opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                top 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.35s ease,
+                border-color 0.35s ease,
+                background-color 0.35s ease;
+
+            /* Layered shadows with colored glow from background orbs */
+            box-shadow:
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+                inset 0 -1px 0 0 rgba(0, 0, 0, 0.08),
+                0 2px 4px rgba(0, 0, 0, 0.08),
+                0 8px 24px rgba(0, 0, 0, 0.18),
+                0 20px 48px rgba(0, 0, 0, 0.12),
+                0 0 60px rgba(0, 240, 252, 0.04),
+                0 0 80px rgba(180, 74, 255, 0.02);
         }
 
         .terminal:hover {
-            border-color: var(--text-dim);
+            border-color: var(--glass-border-hover);
+            background-color: var(--bg-card-hover);
+            top: -6px;
+            box-shadow:
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.25),
+                inset 0 -1px 0 0 rgba(0, 0, 0, 0.06),
+                0 6px 8px rgba(0, 0, 0, 0.1),
+                0 16px 36px rgba(0, 0, 0, 0.22),
+                0 28px 72px rgba(0, 0, 0, 0.16),
+                0 0 60px rgba(74, 234, 220, 0.07),
+                0 0 100px rgba(180, 74, 255, 0.04);
         }
 
+        /* Stagger entrance for side-by-side cards (Skills + Certs) */
+        .grid > .terminal:nth-child(2) {
+            transition-delay: 0s, 0.1s, 0s, 0s, 0s, 0s;
+        }
+        .grid > .terminal:nth-child(3) {
+            transition-delay: 0s, 0.22s, 0s, 0s, 0s, 0s;
+        }
+
+        /* ═══════════════════════════════════════════════════
+           TERMINAL HEADER
+           ═══════════════════════════════════════════════════ */
         .terminal-header {
-            background: #1a1a1a;
-            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 0.85rem 1.25rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .terminal-dot {
@@ -118,18 +195,19 @@
             border-radius: 50%;
         }
 
-        .terminal-dot.red { background: #ff5f56; }
-        .terminal-dot.yellow { background: #ffbd2e; }
-        .terminal-dot.green { background: #27ca40; }
+        .terminal-dot.red { background: #ff5f56; box-shadow: 0 0 6px rgba(255, 95, 86, 0.4); }
+        .terminal-dot.yellow { background: #ffbd2e; box-shadow: 0 0 6px rgba(255, 189, 46, 0.3); }
+        .terminal-dot.green { background: #27ca40; box-shadow: 0 0 6px rgba(39, 202, 64, 0.4); }
 
         .terminal-title {
             margin-left: auto;
             color: var(--gray);
             font-size: 0.75rem;
+            opacity: 0.7;
         }
 
         .terminal-body {
-            padding: 1.25rem;
+            padding: 2rem 1.75rem;
         }
 
         /* Command Prompt Style */
@@ -147,18 +225,22 @@
             padding-left: 0;
         }
 
-        /* Hero Section */
+        /* ═══════════════════════════════════════════════════
+           HERO SECTION
+           ═══════════════════════════════════════════════════ */
         .hero-terminal .terminal-body {
-            min-height: 200px;
+            min-height: 220px;
+            padding: 2.5rem 2rem;
         }
 
         .ascii-name {
             color: var(--text);
             font-size: 0.6rem;
             line-height: 1.2;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
             white-space: pre;
             overflow-x: auto;
+            text-shadow: 0 0 20px rgba(74, 234, 220, 0.3);
         }
 
         @media (max-width: 600px) {
@@ -180,6 +262,7 @@
             background: var(--text);
             margin-left: 4px;
             animation: blink 1s step-end infinite;
+            box-shadow: 0 0 8px rgba(74, 234, 220, 0.5);
         }
 
         @keyframes blink {
@@ -188,7 +271,7 @@
 
         .tagline {
             color: var(--text-dim);
-            margin-top: 1rem;
+            margin-top: 1.25rem;
             font-size: 0.9rem;
         }
 
@@ -196,40 +279,50 @@
             color: var(--text);
         }
 
-        /* Navigation */
+        /* ═══════════════════════════════════════════════════
+           NAVIGATION — Glass button style with frosted effect
+           ═══════════════════════════════════════════════════ */
         .nav-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
+            gap: 0.65rem;
+            margin-top: 1.75rem;
         }
 
         .nav-link {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 4px;
+            padding: 0.6rem 1.1rem;
+            background: rgba(74, 234, 220, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(74, 234, 220, 0.18);
+            border-radius: 8px;
             color: var(--text-dim);
             text-decoration: none;
             font-size: 0.8rem;
+            position: relative;
+            top: 0;
             transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
 
         .nav-link:hover {
-            border-color: var(--text);
+            border-color: rgba(74, 234, 220, 0.4);
             color: var(--text);
-            background: rgba(0, 255, 65, 0.05);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+            background: rgba(74, 234, 220, 0.12);
+            box-shadow: 0 4px 20px rgba(74, 234, 220, 0.12), 0 2px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            top: 1px;
         }
 
-        /* Grid Layout */
+        /* ═══════════════════════════════════════════════════
+           GRID LAYOUT
+           ═══════════════════════════════════════════════════ */
         .grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1.5rem;
+            gap: 2.5rem;
         }
 
         @media (min-width: 768px) {
@@ -243,12 +336,17 @@
 
         /* Section Headers */
         .section-cmd {
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* Skills - Interactive Tags */
+        /* ═══════════════════════════════════════════════════
+           SKILLS — Floating glass chips
+           ═══════════════════════════════════════════════════ */
         .skill-category {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .skill-category:last-child {
@@ -257,10 +355,10 @@
 
         .skill-label {
             color: var(--gray);
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.5rem;
+            letter-spacing: 0.12em;
+            margin-bottom: 0.6rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -274,45 +372,58 @@
         .skill-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.4rem;
+            gap: 0.45rem;
         }
 
         .skill-tag {
-            padding: 0.3rem 0.6rem;
-            background: transparent;
-            border: 1px solid var(--text-dim);
-            border-radius: 3px;
+            padding: 0.35rem 0.7rem;
+            background: linear-gradient(135deg, rgba(74, 234, 220, 0.06), rgba(74, 234, 220, 0.03));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(74, 234, 220, 0.18);
+            border-radius: 6px;
             color: var(--text-dim);
             font-size: 0.75rem;
             transition: all 0.2s ease;
             cursor: default;
+            position: relative;
+            top: 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
 
         .skill-tag:hover {
             background: var(--text);
             color: var(--bg);
             border-color: var(--text);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 255, 65, 0.3);
+            top: -2px;
+            box-shadow: 0 4px 15px rgba(74, 234, 220, 0.35);
         }
 
         .skill-tag.highlight {
-            border-color: var(--accent);
+            border-color: rgba(255, 51, 51, 0.3);
             color: var(--accent);
+            background: linear-gradient(135deg, rgba(255, 51, 51, 0.10), rgba(180, 74, 255, 0.06));
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 0 12px rgba(255, 51, 51, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
 
         .skill-tag.highlight:hover {
             background: var(--accent);
             color: white;
-            box-shadow: 0 4px 12px rgba(255, 51, 51, 0.3);
+            border-color: var(--accent);
+            top: -2px;
+            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.35);
         }
 
-        /* Experience Timeline */
+        /* ═══════════════════════════════════════════════════
+           EXPERIENCE TIMELINE
+           ═══════════════════════════════════════════════════ */
         .exp-item {
             position: relative;
-            padding-left: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-left: 2px solid var(--border);
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+            padding-top: 0.5rem;
+            border-left: 2px solid rgba(74, 234, 220, 0.18);
+            margin-bottom: 0.5rem;
         }
 
         .exp-item:last-child {
@@ -320,42 +431,54 @@
             border-left-color: transparent;
         }
 
+        .exp-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            bottom: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(74, 234, 220, 0.10), transparent);
+        }
+
         .exp-item::before {
             content: '';
             position: absolute;
             left: -7px;
-            top: 0;
+            top: 0.6rem;
             width: 12px;
             height: 12px;
             background: var(--bg);
             border: 2px solid var(--text);
             border-radius: 50%;
             transition: all 0.3s ease;
+            box-shadow: 0 0 8px rgba(74, 234, 220, 0.15);
         }
 
         .exp-item:hover::before {
             background: var(--text);
-            box-shadow: 0 0 15px var(--text);
+            box-shadow: 0 0 20px rgba(74, 234, 220, 0.5);
         }
 
         .exp-header {
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
 
         .exp-title {
             color: var(--white);
-            font-weight: 600;
-            font-size: 0.95rem;
+            font-weight: 700;
+            font-size: 1.05rem;
         }
 
         .exp-company {
             color: var(--accent);
-            font-size: 0.85rem;
+            font-size: 0.88rem;
         }
 
         .exp-date {
             color: var(--gray);
             font-size: 0.75rem;
+            margin-top: 0.15rem;
         }
 
         .exp-bullets {
@@ -364,10 +487,11 @@
 
         .exp-bullets li {
             position: relative;
-            padding-left: 1.25rem;
-            margin-bottom: 0.5rem;
+            padding-left: 1.35rem;
+            margin-bottom: 0.65rem;
             color: var(--text-dim);
             font-size: 0.85rem;
+            line-height: 1.65;
         }
 
         .exp-bullets li::before {
@@ -378,20 +502,54 @@
             font-weight: bold;
         }
 
-        /* Impact metrics callout */
+        /* ═══════════════════════════════════════════════════
+           METRICS — Frosted glass pills with shimmer
+           ═══════════════════════════════════════════════════ */
         .metric {
             color: var(--text-bright);
-            font-weight: 600;
+            font-weight: 700;
+            background: linear-gradient(135deg, rgba(74, 234, 220, 0.10), rgba(74, 234, 220, 0.16), rgba(74, 234, 220, 0.10));
+            background-size: 200% 200%;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(74, 234, 220, 0.22);
+            border-radius: 6px;
+            padding: 0.15rem 0.5rem;
+            white-space: nowrap;
+            text-shadow: 0 0 10px rgba(74, 234, 220, 0.35);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 0 12px rgba(74, 234, 220, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            animation: metricShimmer 3s ease-in-out infinite, metricPulse 0.8s ease 1.5s 1;
         }
 
-        /* Projects */
+        @keyframes metricShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes metricPulse {
+            0% { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 0 12px rgba(74, 234, 220, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.08); text-shadow: 0 0 10px rgba(74, 234, 220, 0.35); }
+            50% { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 0 18px 2px rgba(74, 234, 220, 0.4), 0 0 30px rgba(74, 234, 220, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08); text-shadow: 0 0 18px rgba(74, 234, 220, 0.6); }
+            100% { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 0 12px rgba(74, 234, 220, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.08); text-shadow: 0 0 10px rgba(74, 234, 220, 0.35); }
+        }
+
+        /* ═══════════════════════════════════════════════════
+           PROJECTS — Inner glass cards with enhanced treatment
+           ═══════════════════════════════════════════════════ */
         .project-card {
-            background: rgba(0, 255, 65, 0.02);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1rem;
+            background: rgba(74, 234, 220, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(74, 234, 220, 0.12);
+            border-radius: 12px;
+            padding: 1.25rem;
             margin-bottom: 1rem;
             transition: all 0.3s ease;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                0 2px 10px rgba(0, 0, 0, 0.15),
+                0 0 20px rgba(0, 240, 252, 0.03);
+            position: relative;
+            top: 0;
         }
 
         .project-card:last-child {
@@ -399,28 +557,34 @@
         }
 
         .project-card:hover {
-            border-color: var(--text-dim);
-            background: rgba(0, 255, 65, 0.05);
-            transform: translateX(5px);
+            border-color: rgba(74, 234, 220, 0.25);
+            background: rgba(74, 234, 220, 0.06);
+            top: -4px;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 6px 20px rgba(0, 0, 0, 0.25),
+                0 0 30px rgba(74, 234, 220, 0.06),
+                0 0 60px rgba(180, 74, 255, 0.03);
         }
 
         .project-name {
             color: var(--white);
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 0.25rem;
+            font-weight: 700;
+            font-size: 0.92rem;
+            margin-bottom: 0.3rem;
         }
 
         .project-meta {
             color: var(--gray);
-            font-size: 0.7rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.72rem;
+            margin-bottom: 0.6rem;
         }
 
         .project-desc {
             color: var(--text-dim);
-            font-size: 0.8rem;
-            margin-bottom: 0.75rem;
+            font-size: 0.82rem;
+            margin-bottom: 0.85rem;
+            line-height: 1.65;
         }
 
         .project-link {
@@ -430,19 +594,23 @@
             display: inline-flex;
             align-items: center;
             gap: 0.25rem;
+            transition: all 0.2s ease;
         }
 
         .project-link:hover {
             text-decoration: underline;
+            text-shadow: 0 0 8px rgba(74, 234, 220, 0.3);
         }
 
-        /* Certifications */
+        /* ═══════════════════════════════════════════════════
+           CERTIFICATIONS
+           ═══════════════════════════════════════════════════ */
         .cert-item {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .cert-item:last-child {
@@ -450,14 +618,18 @@
         }
 
         .cert-icon {
-            width: 36px;
-            height: 36px;
-            border: 1px solid var(--text-dim);
-            border-radius: 6px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(74, 234, 220, 0.10), rgba(180, 74, 255, 0.06));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(74, 234, 220, 0.18);
+            box-shadow: 0 2px 8px rgba(0, 240, 252, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 1.1rem;
             flex-shrink: 0;
         }
 
@@ -467,8 +639,8 @@
 
         .cert-name {
             color: var(--white);
-            font-size: 0.85rem;
-            font-weight: 500;
+            font-size: 0.88rem;
+            font-weight: 600;
         }
 
         .cert-detail {
@@ -478,119 +650,154 @@
 
         .cert-status {
             font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 3px;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 500;
         }
 
         .cert-status.active {
-            background: rgba(0, 255, 65, 0.1);
+            background: rgba(74, 234, 220, 0.10);
             color: var(--text);
-            border: 1px solid var(--text-dim);
+            border: 1px solid rgba(74, 234, 220, 0.25);
+            text-shadow: 0 0 6px rgba(74, 234, 220, 0.2);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .cert-status.progress {
             background: var(--accent-dim);
             color: var(--accent);
-            border: 1px solid var(--accent);
+            border: 1px solid rgba(255, 51, 51, 0.3);
+            text-shadow: 0 0 6px rgba(255, 51, 51, 0.2);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
-        /* CTA Section */
+        /* ═══════════════════════════════════════════════════
+           CTA SECTION — Enhanced glass glow with pronounced animation
+           ═══════════════════════════════════════════════════ */
         .cta-box {
-            background: linear-gradient(135deg, rgba(255, 51, 51, 0.1) 0%, rgba(0, 255, 65, 0.05) 100%);
-            border: 1px solid var(--accent);
-            border-radius: 6px;
-            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 51, 51, 0.10) 0%, rgba(180, 74, 255, 0.06) 50%, rgba(74, 234, 220, 0.06) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 51, 51, 0.22);
+            border-radius: 14px;
+            padding: 2rem;
+            box-shadow:
+                0 4px 25px rgba(0, 0, 0, 0.2),
+                0 0 60px rgba(255, 51, 51, 0.06),
+                0 0 80px rgba(180, 74, 255, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.10);
+            animation: ctaGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes ctaGlow {
+            0%, 100% {
+                border-color: rgba(255, 51, 51, 0.18);
+                box-shadow:
+                    0 4px 25px rgba(0, 0, 0, 0.2),
+                    0 0 50px rgba(255, 51, 51, 0.05),
+                    0 0 80px rgba(180, 74, 255, 0.03),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+            }
+            50% {
+                border-color: rgba(255, 51, 51, 0.40);
+                box-shadow:
+                    0 4px 25px rgba(0, 0, 0, 0.2),
+                    0 0 60px rgba(255, 51, 51, 0.10),
+                    0 0 100px rgba(180, 74, 255, 0.06),
+                    0 0 120px rgba(74, 234, 220, 0.04),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+            }
         }
 
         .cta-title {
             color: var(--white);
-            font-size: 1rem;
-            margin-bottom: 0.75rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.85rem;
         }
 
         .cta-text {
             color: var(--text-dim);
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
+            font-size: 0.88rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
         }
 
         .cta-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.75rem;
+            gap: 0.85rem;
         }
 
         .cta-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.6rem 1.25rem;
+            padding: 0.7rem 1.4rem;
             background: var(--accent);
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             color: white;
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
+            font-weight: 600;
             font-family: inherit;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.25);
+            position: relative;
+            top: 0;
         }
 
         .cta-btn:hover {
             background: #ff5555;
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.4);
-            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 51, 51, 0.4);
+            top: -2px;
         }
 
         .cta-btn.secondary {
-            background: transparent;
-            border: 1px solid var(--text-dim);
+            background: rgba(74, 234, 220, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(74, 234, 220, 0.22);
             color: var(--text);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
 
         .cta-btn.secondary:hover {
-            border-color: var(--text);
-            background: rgba(0, 255, 65, 0.1);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            border-color: rgba(74, 234, 220, 0.4);
+            background: rgba(74, 234, 220, 0.12);
+            box-shadow: 0 4px 20px rgba(74, 234, 220, 0.15);
+            top: -2px;
         }
 
-        /* Footer */
+        /* ═══════════════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════════════ */
         footer {
             text-align: center;
-            padding: 2rem 0;
+            padding: 2.5rem 0;
             color: var(--gray);
             font-size: 0.75rem;
-            border-top: 1px solid var(--border);
-            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: 2.5rem;
         }
 
         footer a {
             color: var(--text-dim);
             text-decoration: none;
+            transition: all 0.2s ease;
         }
 
         footer a:hover {
             color: var(--text);
+            text-shadow: 0 0 8px rgba(74, 234, 220, 0.3);
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .terminal {
-            animation: fadeInUp 0.5s ease forwards;
-        }
-
-        .terminal:nth-child(2) { animation-delay: 0.1s; }
-        .terminal:nth-child(3) { animation-delay: 0.2s; }
-        .terminal:nth-child(4) { animation-delay: 0.3s; }
+        /* ═══════════════════════════════════════════════════
+           ANIMATIONS & EFFECTS
+           ═══════════════════════════════════════════════════ */
 
         /* Glitch effect on hover for name */
         .glitch {
@@ -646,6 +853,22 @@
             .collapsible-content.show {
                 max-height: 2000px;
             }
+
+            .container {
+                padding: 1.25rem 1rem;
+            }
+
+            .terminal-body {
+                padding: 1.5rem 1.25rem;
+            }
+
+            .hero-terminal .terminal-body {
+                padding: 1.5rem 1rem;
+            }
+
+            .terminal {
+                margin-bottom: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -676,12 +899,12 @@
                 
                 <div class="output">
                     <p style="color: var(--white); font-size: 1.1rem; font-weight: 600;">
-                        SOC Analyst • Vulnerability Analyst • Junior Pentester
+                        SOC Analyst • Detection Engineer • Security Researcher
                     </p>
                 </div>
 
                 <p class="tagline">
-                    <strong>8 years</strong> defending critical infrastructure. Now learning to <strong style="color: var(--accent);">break it</strong>.
+                    <strong>8 years</strong> in critical infrastructure operations. Now building <strong style="color: var(--accent);">offensive security</strong> skills to match.
                 </p>
 
                 <div class="nav-links">
@@ -715,23 +938,27 @@
                             <div class="exp-date">Aug 2018 – Sept 2025 • Houston, TX</div>
                         </div>
                         <ul class="exp-bullets">
-                            <li>First eyes on <span class="metric">50+ daily security alerts</span> via Taegis XDR—identified true positives, killed false positives, escalated threats before they spread.</li>
-                            <li>Owned incident triage for <span class="metric">200+ endpoints</span> across critical energy infrastructure. SLA compliance wasn't optional.</li>
-                            <li>Bridged the gap between SOC, engineering, vendors, and field teams during high-pressure outages. Calm under chaos.</li>
-                            <li>Wrote incident reports that leadership actually read—translated technical findings into actionable security improvements.</li>
+                            <li>Monitored <span class="metric">200+ endpoints</span> across nationwide SCADA/OT/IT infrastructure using Splunk and Taegis XDR to maintain uptime and operational continuity.</li>
+                            <li>Managed network outage response, coordinating with MSPs, ISPs, and field teams to restore service across critical energy infrastructure under time-critical pressure.</li>
+                            <li>Triaged and escalated <span class="metric">50+ daily alerts</span> across distributed pipeline systems, distinguishing operational events from infrastructure issues requiring immediate action.</li>
+                            <li>Documented incident timelines, root cause analyses, and resolution procedures for operational and leadership review.</li>
+                            <li>Operated in a 24/7 critical infrastructure environment requiring continuous situational awareness and cross-functional coordination.</li>
                         </ul>
                     </div>
 
                     <div class="exp-item">
                         <div class="exp-header">
-                            <div class="exp-title">Freelance Infrastructure Consultant</div>
-                            <div class="exp-company">Self-Employed</div>
+                            <div class="exp-title">Security Researcher / Infrastructure Engineer</div>
+                            <div class="exp-company">Freelance Infrastructure & Security Consulting</div>
                             <div class="exp-date">May 2020 – Present</div>
                         </div>
                         <ul class="exp-bullets">
-                            <li>Deployed self-hosted GitLab on Ubuntu Server + Tailscale VPN. Secure CI/CD without the cloud dependency.</li>
-                            <li>Migrated legacy WordPress sites to modern hosting—cut costs, improved uptime, hardened attack surface.</li>
-                            <li>Built Supabase backends with proper auth and row-level security. Because "admin/admin" isn't a password policy.</li>
+                            <li>Conduct offensive security research including vulnerability analysis, OSINT tool development, and steganographic encoding techniques for red team applications.</li>
+                            <li>Developed and published <span class="metric">open-source security tools</span> for OSINT data collection and steganographic analysis (available on GitHub).</li>
+                            <li>Build and validate detection use cases, security rules, and correlation logic based on MITRE ATT&CK framework and adversarial behavior patterns.</li>
+                            <li>Design and deploy secure cloud infrastructure for broadcast operations—streaming servers, web platforms, CI/CD pipelines, and automation.</li>
+                            <li>Deployed self-hosted GitLab on Ubuntu Server + Tailscale VPN. Built backends with proper auth and row-level security.</li>
+                            <li>Produce cybersecurity educational content translating complex security concepts for general audiences.</li>
                         </ul>
                     </div>
 
@@ -913,9 +1140,9 @@
                             I've spent 8 years learning how systems work—and fail—under pressure. 
                             Now I'm focused on finding the vulnerabilities before the bad actors do. 
                             Looking for <strong style="color: var(--text);">SOC Analyst</strong>, 
-                            <strong style="color: var(--text);">Vulnerability Analyst</strong>, or 
-                            <strong style="color: var(--accent);">Junior Pentester</strong> roles where I can apply 
-                            defensive experience to offensive problems.
+                            <strong style="color: var(--text);">Detection Engineer</strong>, or 
+                            <strong style="color: var(--accent);">Security Researcher</strong> roles where I can apply 
+                            operational discipline and security research experience.
                         </p>
                         <div class="cta-links">
                             <a href="mailto:matt.valdez@pm.me" class="cta-btn">📧 Let's Talk</a>
