@@ -64,65 +64,6 @@ matters for anyone landing on the page from a shared IP.</p>]]></content:encoded
             <category>javascript</category>
         </item>
         <item>
-            <title><![CDATA[Migrating a client site to Docusaurus without losing its design system]]></title>
-            <link>https://valm23.github.io/writeups/2026/08/01/docusaurus-migration</link>
-            <guid>https://valm23.github.io/writeups/2026/08/01/docusaurus-migration</guid>
-            <pubDate>Sat, 01 Aug 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[I recently took a legacy single-page site — hand-rolled HTML/CSS, no build]]></description>
-            <content:encoded><![CDATA[<p>I recently took a legacy single-page site — hand-rolled HTML/CSS, no build
-step, no component reuse — and rebuilt it on Docusaurus for a small
-streaming/media client. The brief was narrow: match the existing brand
-exactly, get real routing and a blog out of it, and don't regress anything
-a visitor would notice. That last part turned out to be the interesting
-half of the job.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="reusing-an-existing-component-library-that-assumed-tailwind">Reusing an existing component library that assumed Tailwind<a href="https://valm23.github.io/writeups/2026/08/01/docusaurus-migration#reusing-an-existing-component-library-that-assumed-tailwind" class="hash-link" aria-label="Direct link to Reusing an existing component library that assumed Tailwind" title="Direct link to Reusing an existing component library that assumed Tailwind" translate="no">​</a></h2>
-<p>The client's design system — glass-panel surfaces, a shared color/motion
-token file, a component CSS layer built on Tailwind's <code>@apply</code> — lived in a
-separate Vite/React app. Docusaurus doesn't ship Tailwind, and the two
-frameworks don't compose by default: Tailwind's own reset (<code>preflight</code>)
-strips out a lot of what Infima (Docusaurus's base theme) already provides,
-so turning it on naively broke navigation, buttons, and admonitions
-site-wide within about five minutes of enabling it.</p>
-<p>The fix was a plugin hook into Docusaurus's PostCSS pipeline
-(<code>configurePostCss</code>) that runs Tailwind and Autoprefixer alongside the
-existing pipeline, with <code>corePlugins: { preflight: false }</code> in the Tailwind
-config so it only ever adds utility classes and never resets anything
-Infima owns. That let the client's existing <code>@apply</code>-based stylesheet drop
-in unmodified — no rewrite, no parallel maintenance of two versions of the
-same component styles.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-theming-bug-that-isnt-in-the-docs">The theming bug that isn't in the docs<a href="https://valm23.github.io/writeups/2026/08/01/docusaurus-migration#the-theming-bug-that-isnt-in-the-docs" class="hash-link" aria-label="Direct link to The theming bug that isn't in the docs" title="Direct link to The theming bug that isn't in the docs" translate="no">​</a></h2>
-<p>Getting the color palette to match required overriding a long list of
-Infima's CSS custom properties in <code>:root</code>. The build looked right in every
-manual check — until I actually rendered it and sampled pixel colors: the
-page body below the hero was Infima's stock dark grey, not the client's
-near-black.</p>
-<p>Infima re-declares its dark-mode variables scoped to <code>html[data-theme='dark']</code>,
-not <code>:root</code>, and that selector outranks both <code>:root</code> and even a bare
-<code>[data-theme='dark']</code> override — by CSS specificity, not by source order.
-My first fix used the bare selector and <em>still</em> lost. It only worked once
-I matched the <code>html</code> prefix exactly. Same story showed up twice more:
-Infima's secondary button variant is scoped <code>.button.button--secondary</code>
-(two class selectors), which beat my first override written as a single
-class. Once I started reading the <em>compiled</em> CSS instead of guessing at
-specificity, both fixes landed in one try instead of three.</p>
-<p>Second lesson, smaller but worth writing down: the production CSS
-minifier renames keyframes (<code>my-animation</code> becomes <code>a</code>) and compresses
-hex colors into shorthand. A <code>grep</code> for my own animation name against the
-built output came back empty and looked like the animation hadn't
-shipped — it had, just under a different name. Verifying against rendered
-output (a headless screenshot, pixel-sampled) rather than raw text search
-caught that before it became a false "this is broken" report.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="outcome">Outcome<a href="https://valm23.github.io/writeups/2026/08/01/docusaurus-migration#outcome" class="hash-link" aria-label="Direct link to Outcome" title="Direct link to Outcome" translate="no">​</a></h2>
-<p>The rebuilt site ships the client's existing design tokens, fonts, and
-component styles unmodified, gets Docusaurus's routing/blog/search for
-free, and the two specificity bugs above are now things I check for by
-default on any theme-override work rather than things I discover by
-accident.</p>]]></content:encoded>
-            <category>infrastructure</category>
-            <category>frontend</category>
-            <category>css</category>
-        </item>
-        <item>
             <title><![CDATA[A design-token file that stays in sync by being overwritten, not merged]]></title>
             <link>https://valm23.github.io/writeups/2026/08/01/design-tokens</link>
             <guid>https://valm23.github.io/writeups/2026/08/01/design-tokens</guid>
@@ -185,6 +126,65 @@ separate codebases.</p>]]></content:encoded>
             <category>infrastructure</category>
             <category>css</category>
             <category>frontend</category>
+        </item>
+        <item>
+            <title><![CDATA[Migrating a client site to Docusaurus without losing its design system]]></title>
+            <link>https://valm23.github.io/writeups/2026/08/01/docusaurus-migration</link>
+            <guid>https://valm23.github.io/writeups/2026/08/01/docusaurus-migration</guid>
+            <pubDate>Sat, 01 Aug 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[I recently took a legacy single-page site — hand-rolled HTML/CSS, no build]]></description>
+            <content:encoded><![CDATA[<p>I recently took a legacy single-page site — hand-rolled HTML/CSS, no build
+step, no component reuse — and rebuilt it on Docusaurus for a small
+streaming/media client. The brief was narrow: match the existing brand
+exactly, get real routing and a blog out of it, and don't regress anything
+a visitor would notice. That last part turned out to be the interesting
+half of the job.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="reusing-an-existing-component-library-that-assumed-tailwind">Reusing an existing component library that assumed Tailwind<a href="https://valm23.github.io/writeups/2026/08/01/docusaurus-migration#reusing-an-existing-component-library-that-assumed-tailwind" class="hash-link" aria-label="Direct link to Reusing an existing component library that assumed Tailwind" title="Direct link to Reusing an existing component library that assumed Tailwind" translate="no">​</a></h2>
+<p>The client's design system — glass-panel surfaces, a shared color/motion
+token file, a component CSS layer built on Tailwind's <code>@apply</code> — lived in a
+separate Vite/React app. Docusaurus doesn't ship Tailwind, and the two
+frameworks don't compose by default: Tailwind's own reset (<code>preflight</code>)
+strips out a lot of what Infima (Docusaurus's base theme) already provides,
+so turning it on naively broke navigation, buttons, and admonitions
+site-wide within about five minutes of enabling it.</p>
+<p>The fix was a plugin hook into Docusaurus's PostCSS pipeline
+(<code>configurePostCss</code>) that runs Tailwind and Autoprefixer alongside the
+existing pipeline, with <code>corePlugins: { preflight: false }</code> in the Tailwind
+config so it only ever adds utility classes and never resets anything
+Infima owns. That let the client's existing <code>@apply</code>-based stylesheet drop
+in unmodified — no rewrite, no parallel maintenance of two versions of the
+same component styles.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-theming-bug-that-isnt-in-the-docs">The theming bug that isn't in the docs<a href="https://valm23.github.io/writeups/2026/08/01/docusaurus-migration#the-theming-bug-that-isnt-in-the-docs" class="hash-link" aria-label="Direct link to The theming bug that isn't in the docs" title="Direct link to The theming bug that isn't in the docs" translate="no">​</a></h2>
+<p>Getting the color palette to match required overriding a long list of
+Infima's CSS custom properties in <code>:root</code>. The build looked right in every
+manual check — until I actually rendered it and sampled pixel colors: the
+page body below the hero was Infima's stock dark grey, not the client's
+near-black.</p>
+<p>Infima re-declares its dark-mode variables scoped to <code>html[data-theme='dark']</code>,
+not <code>:root</code>, and that selector outranks both <code>:root</code> and even a bare
+<code>[data-theme='dark']</code> override — by CSS specificity, not by source order.
+My first fix used the bare selector and <em>still</em> lost. It only worked once
+I matched the <code>html</code> prefix exactly. Same story showed up twice more:
+Infima's secondary button variant is scoped <code>.button.button--secondary</code>
+(two class selectors), which beat my first override written as a single
+class. Once I started reading the <em>compiled</em> CSS instead of guessing at
+specificity, both fixes landed in one try instead of three.</p>
+<p>Second lesson, smaller but worth writing down: the production CSS
+minifier renames keyframes (<code>my-animation</code> becomes <code>a</code>) and compresses
+hex colors into shorthand. A <code>grep</code> for my own animation name against the
+built output came back empty and looked like the animation hadn't
+shipped — it had, just under a different name. Verifying against rendered
+output (a headless screenshot, pixel-sampled) rather than raw text search
+caught that before it became a false "this is broken" report.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="outcome">Outcome<a href="https://valm23.github.io/writeups/2026/08/01/docusaurus-migration#outcome" class="hash-link" aria-label="Direct link to Outcome" title="Direct link to Outcome" translate="no">​</a></h2>
+<p>The rebuilt site ships the client's existing design tokens, fonts, and
+component styles unmodified, gets Docusaurus's routing/blog/search for
+free, and the two specificity bugs above are now things I check for by
+default on any theme-override work rather than things I discover by
+accident.</p>]]></content:encoded>
+            <category>infrastructure</category>
+            <category>frontend</category>
+            <category>css</category>
         </item>
         <item>
             <title><![CDATA[Tailnet-scoped access instead of a VPN client for every collaborator]]></title>
