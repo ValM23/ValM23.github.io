@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://valm23.github.io/writeups</id>
+    <title>Roxy Valdez Blog</title>
+    <updated>2026-08-01T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://valm23.github.io/writeups"/>
+    <subtitle>Roxy Valdez Blog</subtitle>
+    <icon>https://valm23.github.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Killing a rate-limit bug by moving an API call from the browser to the build]]></title>
+        <id>https://valm23.github.io/writeups/2026/08/01/build-time-fetching</id>
+        <link href="https://valm23.github.io/writeups/2026/08/01/build-time-fetching"/>
+        <updated>2026-08-01T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[A client's "Projects" page pulled repo data live from the GitHub API,]]></summary>
+        <content type="html"><![CDATA[<p>A client's "Projects" page pulled repo data live from the GitHub API,
+client-side, on every page load — no auth token, since it was running in
+the visitor's browser. That's a 60 requests/hour cap shared across
+<em>every</em> visitor on the same IP or NAT block. Anyone behind a shared IP —
+an office, a university, a CGNAT ISP — could land on the page with the
+quota already burned by someone else and get a silent empty grid.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-failure-was-invisible-by-design">The failure was invisible by design<a href="https://valm23.github.io/writeups/2026/08/01/build-time-fetching#the-failure-was-invisible-by-design" class="hash-link" aria-label="Direct link to The failure was invisible by design" title="Direct link to The failure was invisible by design" translate="no">​</a></h2>
+<p>The original <code>fetch().catch()</code> swallowed the error and just stopped
+loading, with no distinct state for "the API said no" versus "still
+loading." On a fast connection those two states are nearly
+indistinguishable to a visitor, which is exactly why nobody had noticed it
+in testing — testing tends to happen from an IP that hasn't hit the cap.</p>
+<p>First pass at a fix added a real error state: check <code>res.ok</code> before
+treating the response as data (GitHub returns a JSON object, not an array,
+on a 403 — treating it as a list without checking status first throws
+somewhere unrelated and is confusing to debug), and render something
+distinct from "loading" when it fails, including a manual fallback link to
+the GitHub org page. That's the honest floor for handling any external API
+call from the client — but it doesn't fix the actual cap, it just fails
+more legibly.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="moving-the-fetch-to-publish-time">Moving the fetch to publish time<a href="https://valm23.github.io/writeups/2026/08/01/build-time-fetching#moving-the-fetch-to-publish-time" class="hash-link" aria-label="Direct link to Moving the fetch to publish time" title="Direct link to Moving the fetch to publish time" translate="no">​</a></h2>
+<p>The real fix was removing the client-side call entirely. A small Node
+script runs once per deploy, during CI, and fetches each repo's README
+using <code>GITHUB_TOKEN</code> — which raises the same endpoint's limit from 60/hour
+to 5,000/hour, and more importantly means the <em>build</em> eats one fetch per
+repo, once, rather than every visitor eating one fetch per page load.
+Results get reduced to a short plain-text snippet (strip code fences, HTML,
+image/badge markdown, list bullets; keep the first real paragraph, cut it
+to length on a sentence boundary where possible) and written to a static
+JSON file that ships in the bundle. Visitors read a JSON file, not an API.</p>
+<p>Two things made this safe to run unattended in CI rather than just
+locally:</p>
+<ul>
+<li class="">If a given repo's fetch fails, the script merges its output over the
+<strong>previous</strong> committed snapshot rather than overwriting it — one flaky
+network call during a deploy shouldn't blank out a working page.</li>
+<li class="">If every fetch fails, it exits without writing anything at all, so a
+bad CI run can't silently ship an emptied data file.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="outcome">Outcome<a href="https://valm23.github.io/writeups/2026/08/01/build-time-fetching#outcome" class="hash-link" aria-label="Direct link to Outcome" title="Direct link to Outcome" translate="no">​</a></h2>
+<p>Visitors now make zero calls to the GitHub API. The one place that still
+could hit a rate limit — the build itself — runs authenticated, on a
+schedule I control, with a script that degrades to "keep the last good
+data" instead of "show nothing," which is the actual failure mode that
+matters for anyone landing on the page from a shared IP.</p>]]></content>
+        <author>
+            <name>Roxy</name>
+            <uri>https://github.com/valm23</uri>
+        </author>
+        <category label="infrastructure" term="infrastructure"/>
+        <category label="ci-cd" term="ci-cd"/>
+        <category label="javascript" term="javascript"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Migrating a client site to Docusaurus without losing its design system]]></title>
+        <id>https://valm23.github.io/writeups/2026/08/01/docusaurus-migration</id>
+        <link href="https://valm23.github.io/writeups/2026/08/01/docusaurus-migration"/>
+        <updated>2026-08-01T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[I recently took a legacy single-page site — hand-rolled HTML/CSS, no build]]></summary>
+        <content type="html"><![CDATA[<p>I recently took a legacy single-page site — hand-rolled HTML/CSS, no build
+step, no component reuse — and rebuilt it on Docusaurus for a small
+streaming/media client. The brief was narrow: match the existing brand
+exactly, get real routing and a blog out of it, and don't regress anything
+a visitor would notice. That last part turned out to be the interesting
+half of the job.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="reusing-an-existing-component-library-that-assumed-tailwind">Reusing an existing component library that assumed Tailwind<a href="https://valm23.github.io/writeups/2026/08/01/docusaurus-migration#reusing-an-existing-component-library-that-assumed-tailwind" class="hash-link" aria-label="Direct link to Reusing an existing component library that assumed Tailwind" title="Direct link to Reusing an existing component library that assumed Tailwind" translate="no">​</a></h2>
+<p>The client's design system — glass-panel surfaces, a shared color/motion
+token file, a component CSS layer built on Tailwind's <code>@apply</code> — lived in a
+separate Vite/React app. Docusaurus doesn't ship Tailwind, and the two
+frameworks don't compose by default: Tailwind's own reset (<code>preflight</code>)
+strips out a lot of what Infima (Docusaurus's base theme) already provides,
+so turning it on naively broke navigation, buttons, and admonitions
+site-wide within about five minutes of enabling it.</p>
+<p>The fix was a plugin hook into Docusaurus's PostCSS pipeline
+(<code>configurePostCss</code>) that runs Tailwind and Autoprefixer alongside the
+existing pipeline, with <code>corePlugins: { preflight: false }</code> in the Tailwind
+config so it only ever adds utility classes and never resets anything
+Infima owns. That let the client's existing <code>@apply</code>-based stylesheet drop
+in unmodified — no rewrite, no parallel maintenance of two versions of the
+same component styles.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-theming-bug-that-isnt-in-the-docs">The theming bug that isn't in the docs<a href="https://valm23.github.io/writeups/2026/08/01/docusaurus-migration#the-theming-bug-that-isnt-in-the-docs" class="hash-link" aria-label="Direct link to The theming bug that isn't in the docs" title="Direct link to The theming bug that isn't in the docs" translate="no">​</a></h2>
+<p>Getting the color palette to match required overriding a long list of
+Infima's CSS custom properties in <code>:root</code>. The build looked right in every
+manual check — until I actually rendered it and sampled pixel colors: the
+page body below the hero was Infima's stock dark grey, not the client's
+near-black.</p>
+<p>Infima re-declares its dark-mode variables scoped to <code>html[data-theme='dark']</code>,
+not <code>:root</code>, and that selector outranks both <code>:root</code> and even a bare
+<code>[data-theme='dark']</code> override — by CSS specificity, not by source order.
+My first fix used the bare selector and <em>still</em> lost. It only worked once
+I matched the <code>html</code> prefix exactly. Same story showed up twice more:
+Infima's secondary button variant is scoped <code>.button.button--secondary</code>
+(two class selectors), which beat my first override written as a single
+class. Once I started reading the <em>compiled</em> CSS instead of guessing at
+specificity, both fixes landed in one try instead of three.</p>
+<p>Second lesson, smaller but worth writing down: the production CSS
+minifier renames keyframes (<code>my-animation</code> becomes <code>a</code>) and compresses
+hex colors into shorthand. A <code>grep</code> for my own animation name against the
+built output came back empty and looked like the animation hadn't
+shipped — it had, just under a different name. Verifying against rendered
+output (a headless screenshot, pixel-sampled) rather than raw text search
+caught that before it became a false "this is broken" report.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="outcome">Outcome<a href="https://valm23.github.io/writeups/2026/08/01/docusaurus-migration#outcome" class="hash-link" aria-label="Direct link to Outcome" title="Direct link to Outcome" translate="no">​</a></h2>
+<p>The rebuilt site ships the client's existing design tokens, fonts, and
+component styles unmodified, gets Docusaurus's routing/blog/search for
+free, and the two specificity bugs above are now things I check for by
+default on any theme-override work rather than things I discover by
+accident.</p>]]></content>
+        <author>
+            <name>Roxy</name>
+            <uri>https://github.com/valm23</uri>
+        </author>
+        <category label="infrastructure" term="infrastructure"/>
+        <category label="frontend" term="frontend"/>
+        <category label="css" term="css"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[A design-token file that stays in sync by being overwritten, not merged]]></title>
+        <id>https://valm23.github.io/writeups/2026/08/01/design-tokens</id>
+        <link href="https://valm23.github.io/writeups/2026/08/01/design-tokens"/>
+        <updated>2026-08-01T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[A client I do infrastructure and security work for runs a handful of]]></summary>
+        <content type="html"><![CDATA[<p>A client I do infrastructure and security work for runs a handful of
+separate properties — a marketing site, an internal operator tool, a
+terminal-based interface — that all needed to look like the same brand
+without becoming the same codebase. The usual failure mode here is drift:
+someone tweaks a color on one property, nobody updates the other three,
+and six months later "brand purple" means four slightly different hex
+values depending on which app you're looking at.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="one-file-no-build-step-no-framework-dependency">One file, no build step, no framework dependency<a href="https://valm23.github.io/writeups/2026/08/01/design-tokens#one-file-no-build-step-no-framework-dependency" class="hash-link" aria-label="Direct link to One file, no build step, no framework dependency" title="Direct link to One file, no build step, no framework dependency" translate="no">​</a></h2>
+<p>The fix predates anything I did — it's a single <code>tokens.css</code> file,
+<code>:root</code>-scoped CSS custom properties, with no Sass, no JS-in-CSS, no
+Tailwind config it depends on. That's deliberate: a plain CSS custom
+property file can be dropped into <em>any</em> frontend — a Vite app, a
+Docusaurus site, a terminal UI's stylesheet — and just work, because CSS
+variable resolution happens at render time in the browser, not at build
+time. There's nothing to compile, so there's nothing that can go stale
+between "the token file" and "the built output."</p>
+<p>The token set itself is narrow on purpose:</p>
+<ul>
+<li class="">A six-stop type scale, referenced by an opt-in class rather than applied
+globally, so components that need the scale can use it and everything
+else is unaffected.</li>
+<li class="">Three border-alpha tiers derived from a single "accent" variable using
+<code>color-mix()</code> — soft/normal/strong borders that are always the same
+color family as whatever accent a given page is themed around, without
+three separately maintained color values.</li>
+<li class="">A "glow budget" of exactly two shadow intensities, so glow effects don't
+end up bespoke-tuned per component.</li>
+<li class="">A shared set of motion easings, so a hover transition on the marketing
+site and a state change in the operator tool decelerate the same way.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="re-syncing-by-overwrite-not-by-merge">Re-syncing by overwrite, not by merge<a href="https://valm23.github.io/writeups/2026/08/01/design-tokens#re-syncing-by-overwrite-not-by-merge" class="hash-link" aria-label="Direct link to Re-syncing by overwrite, not by merge" title="Direct link to Re-syncing by overwrite, not by merge" translate="no">​</a></h2>
+<p>The part I actually contributed was consuming this same file from a new
+property — a documentation/portfolio site built later — without forking
+it. Because every value in the file is either a literal or a
+<code>color-mix()</code> expression referencing another variable <em>in the same file</em>,
+it has no dependency on anything the consuming app defines. That means
+keeping three properties in sync is just "copy this one file over the old
+one" — no merge conflicts, no per-app variant to reconcile, because the
+file was never allowed to grow app-specific branches in the first place.</p>
+<p>The one adaptation needed per consumer was naming: the newest property's
+existing CSS used different variable names for the same concepts
+(<code>--bg-deep</code> vs. <code>--rv-bg-deep</code>, say). Rather than rename everything
+site-wide, I added a thin alias layer — the token file's real names,
+pointed at by whatever names the local codebase already used — so both
+naming conventions resolve to the same underlying values. Substitution in
+CSS custom properties resolves at the point of use, not at declaration
+order, so the alias layer can sit anywhere relative to the import without
+breaking anything.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="outcome">Outcome<a href="https://valm23.github.io/writeups/2026/08/01/design-tokens#outcome" class="hash-link" aria-label="Direct link to Outcome" title="Direct link to Outcome" translate="no">​</a></h2>
+<p>Three frontends, one visual identity, one file that's the actual source
+of truth rather than a starting point that immediately diverges. Updating
+the brand's accent color going forward is a one-line change in one file,
+copied into each property — not a design-review pass across three
+separate codebases.</p>]]></content>
+        <author>
+            <name>Roxy</name>
+            <uri>https://github.com/valm23</uri>
+        </author>
+        <category label="infrastructure" term="infrastructure"/>
+        <category label="css" term="css"/>
+        <category label="frontend" term="frontend"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Tailnet-scoped access instead of a VPN client for every collaborator]]></title>
+        <id>https://valm23.github.io/writeups/2026/08/01/tailscale-gitlab</id>
+        <link href="https://valm23.github.io/writeups/2026/08/01/tailscale-gitlab"/>
+        <updated>2026-08-01T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Self-hosted GitLab, and a few other internal services, run on a client's]]></summary>
+        <content type="html"><![CDATA[<p>Self-hosted GitLab, and a few other internal services, run on a client's
+Ubuntu VPS behind Tailscale rather than a public IP with a firewall
+allowlist. The reasoning isn't "Tailscale is trendy" — it's that
+tag-based ACLs let me grant one external collaborator exactly the access
+they need without touching a shared credential or opening a port to the
+internet.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-problem-with-a-shared-vpn-credential">The problem with a shared VPN credential<a href="https://valm23.github.io/writeups/2026/08/01/tailscale-gitlab#the-problem-with-a-shared-vpn-credential" class="hash-link" aria-label="Direct link to The problem with a shared VPN credential" title="Direct link to The problem with a shared VPN credential" translate="no">​</a></h2>
+<p>The naive version of "let a contractor reach an internal service" is a
+shared VPN config or a port opened to their IP. Both have the same flaw:
+the access grant isn't tied to a specific identity, so revoking it later
+means rotating a shared secret (and hoping nobody else was using it) or
+remembering to close a firewall rule you may not recall opening.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="tag-scoped-acls-instead">Tag-scoped ACLs instead<a href="https://valm23.github.io/writeups/2026/08/01/tailscale-gitlab#tag-scoped-acls-instead" class="hash-link" aria-label="Direct link to Tag-scoped ACLs instead" title="Direct link to Tag-scoped ACLs instead" translate="no">​</a></h2>
+<p>Tailscale's ACL model lets you tag both devices and the policy rules that
+reference them. The VPS itself is tagged as a server node, owned by the
+admin group. A collaborator's device gets its own tag, scoped to exactly
+one rule: SSH only, to that one server tag, landing as an unprivileged
+Linux user with no sudo. Provisioning that access is a single-use,
+non-ephemeral auth key pre-tagged for that collaborator — they run one
+command to join the tailnet, and from that point their access is exactly
+as wide as their tag's rule and no wider. Revoking it later is deleting
+one tag assignment, not rotating a shared secret everyone else also
+depends on.</p>
+<p>The same model extends to services on the box that shouldn't be reachable
+even from the tailnet's other members by default — a local model-serving
+process, for instance, gets bound to <code>127.0.0.1</code> only rather than <code>0.0.0.0</code>,
+so it's not exposed even to other tailnet devices unless something
+explicitly proxies it. "Internal" is enforced at the bind address, not
+just at the network boundary.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-same-pattern-shows-up-outside-ssh">The same pattern shows up outside SSH<a href="https://valm23.github.io/writeups/2026/08/01/tailscale-gitlab#the-same-pattern-shows-up-outside-ssh" class="hash-link" aria-label="Direct link to The same pattern shows up outside SSH" title="Direct link to The same pattern shows up outside SSH" translate="no">​</a></h2>
+<p>I've applied the identical principle to a media ingest service for the
+same client: an RTMP publish endpoint that only accepts connections
+addressed to the VPS's Tailscale IP, with the ingest software additionally
+configured to reject any publish attempt from outside the Tailscale CGNAT
+range (<code>100.64.0.0/10</code>) even if it somehow reached the process. Publisher
+credentials live in a root-owned, mode-600, uncommitted environment file.
+It's the same shape as the GitLab access grant: restrict at the network
+layer first, restrict again inside the application, and never rely on
+"nobody knows the URL" as the actual control.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="outcome">Outcome<a href="https://valm23.github.io/writeups/2026/08/01/tailscale-gitlab#outcome" class="hash-link" aria-label="Direct link to Outcome" title="Direct link to Outcome" translate="no">​</a></h2>
+<p>Access to internal services is per-identity and revocable without
+touching anyone else's credentials, nothing sensitive is reachable from
+the open internet, and every exposure — SSH, GitLab, the ingest
+endpoint — is enforced at two independent layers rather than one.</p>]]></content>
+        <author>
+            <name>Roxy</name>
+            <uri>https://github.com/valm23</uri>
+        </author>
+        <category label="infrastructure" term="infrastructure"/>
+        <category label="security" term="security"/>
+        <category label="networking" term="networking"/>
+    </entry>
+</feed>
