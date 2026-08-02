@@ -149,13 +149,15 @@ function Projects() {
             <div className={styles.projectName}>{project.name}</div>
             <div className={styles.projectMeta}>{project.meta}</div>
             <p className={styles.projectDesc}>{project.desc}</p>
-            <a
-              href={project.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.projectLink}>
-              → {project.linkLabel}
-            </a>
+            {project.href && (
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.projectLink}>
+                → {project.linkLabel}
+              </a>
+            )}
           </div>
         ))}
       </div>

@@ -88,13 +88,21 @@ export const CERTS = [
   {name: 'Associate of Arts', detail: 'Houston Community College', status: 'active'},
 ];
 
-export const PROJECTS = [
+type Project = {
+  name: string;
+  meta: string;
+  desc: string;
+  href?: string;
+  linkLabel?: string;
+};
+
+export const PROJECTS: Project[] = [
   {
     name: 'NahamCon 2025 CTF',
     meta: 'Rank 486/1,709 · Top 30% globally',
     desc: 'Competed against 1,700+ teams. Solved challenges in reverse engineering, web exploitation, and OSINT using Ghidra, Burp Suite, and custom Python scripts.',
-    href: 'https://ctftime.org/team/385998',
-    linkLabel: 'CTFtime profile',
+    // No outbound link here on purpose — the team CTFtime page lists
+    // teammates whose handles shouldn't be one click from this resume.
   },
   {
     name: 'OSINT Document Scraper',
