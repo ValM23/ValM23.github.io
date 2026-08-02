@@ -51,6 +51,47 @@
   }
 }
 
+@media (max-width: 640px) {
+  .hero {
+    padding: 2rem 0 1.5rem;
+  }
+
+  .heroLinks {
+    gap: 0.5rem;
+  }
+
+  .heroLocation {
+    width: 100%;
+  }
+
+  /* Title/org/date crowd into one line on desktop; below this width
+     they stack so the date doesn't get squeezed onto its own tiny slice
+     of the row. */
+  .expHeader {
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .expDate {
+    margin-left: 0;
+  }
+
+  .projectGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 420px) {
+  .heroName {
+    font-size: 1.4rem;
+  }
+
+  .heroLinks .button {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
+
 .expList {
   display: flex;
   flex-direction: column;
