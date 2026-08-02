@@ -1,49 +1,46 @@
 /* Independent design system — deliberately not shared with
-   chaosfoundry.digital or archknight23.github.io. Different hue family
-   (slate/graphite + amber, not violet/gold), different type (a common
-   professional monospace, not a custom display face), different motif
-   (flat terminal chrome, not glass/aurora). */
+   chaosfoundry.digital or archknight23.github.io. Red/black/white
+   palette, glass-panel motif, terminal prompt styling retained
+   as identity without OS window chrome. */
 
 :root {
-  --rv-bg-deep: #0b0e14;
-  --rv-bg-surface: #12161f;
-  --rv-bg-panel: #161b26;
-  --rv-border: rgba(255, 255, 255, 0.08);
-  --rv-border-strong: rgba(255, 255, 255, 0.16);
-  --rv-text-primary: #e4e7ee;
-  --rv-text-muted: #8b93a7;
-  --rv-accent: #f0a020;
-  --rv-accent-dim: rgba(240, 160, 32, 0.15);
+  --rv-bg-deep: #08080c;
+  --rv-bg-surface: #0c0c14;
+  --rv-bg-panel: rgba(20, 0, 0, 0.35);
+  --rv-border: rgba(180, 40, 40, 0.18);
+  --rv-border-strong: rgba(180, 40, 40, 0.35);
+  --rv-text-primary: #e8e8ec;
+  --rv-text-muted: #888898;
+  --rv-accent: #cc3333;
+  --rv-accent-dim: rgba(204, 51, 51, 0.12);
   --rv-ok: #3ecf8e;
-  --rv-warn: #f0a020;
+  --rv-warn: #cc3333;
 
   --rv-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --rv-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-  --ifm-color-primary: #f0a020;
-  --ifm-color-primary-dark: #d88f18;
-  --ifm-color-primary-darker: #cc8617;
-  --ifm-color-primary-darkest: #a86f13;
-  --ifm-color-primary-light: #f2ab3b;
-  --ifm-color-primary-lighter: #f3b04a;
-  --ifm-color-primary-lightest: #f6c274;
+  --ifm-color-primary: #cc3333;
+  --ifm-color-primary-dark: #b82e2e;
+  --ifm-color-primary-darker: #ad2b2b;
+  --ifm-color-primary-darkest: #8f2424;
+  --ifm-color-primary-light: #d14747;
+  --ifm-color-primary-lighter: #d45252;
+  --ifm-color-primary-lightest: #dd7272;
   --ifm-background-color: var(--rv-bg-deep);
-  --ifm-navbar-background-color: rgba(11, 14, 20, 0.92);
+  --ifm-navbar-background-color: rgba(8, 8, 12, 0.92);
   --ifm-footer-background-color: var(--rv-bg-surface);
   --ifm-font-color-base: var(--rv-text-primary);
   --ifm-font-family-base: var(--rv-font-body);
   --ifm-font-family-monospace: var(--rv-font-mono);
   --ifm-link-color: var(--rv-accent);
   --ifm-code-font-size: 90%;
-  --docusaurus-highlighted-code-line-bg: rgba(240, 160, 32, 0.12);
+  --docusaurus-highlighted-code-line-bg: rgba(204, 51, 51, 0.1);
 }
 
-/* Same html[data-theme=dark] specificity issue as the CF build — Infima's
-   own dark values live there and outrank :root, so they're restated here. */
 html[data-theme='dark'] {
   --ifm-background-color: var(--rv-bg-deep);
   --ifm-background-surface-color: var(--rv-bg-surface);
-  --ifm-navbar-background-color: rgba(11, 14, 20, 0.92);
+  --ifm-navbar-background-color: rgba(8, 8, 12, 0.92);
   --ifm-footer-background-color: var(--rv-bg-surface);
   --ifm-font-color-base: var(--rv-text-primary);
   --ifm-heading-color: var(--rv-text-primary);
@@ -63,7 +60,7 @@ h4 {
 
 .navbar {
   border-bottom: 1px solid var(--rv-border);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
 }
 
 .navbar__title {
@@ -77,46 +74,42 @@ h4 {
   font-size: 0.85rem;
 }
 
-/* Terminal window chrome — the site's one recurring motif */
+/* Glass panel — replaces the old OS window chrome */
 .rv-terminal {
   border: 1px solid var(--rv-border);
-  border-radius: 8px;
+  border-radius: 10px;
   background: var(--rv-bg-panel);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   overflow: hidden;
+  box-shadow: 0 0 2rem rgba(180, 40, 40, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
+.rv-terminal:hover {
+  border-color: var(--rv-border-strong);
+  box-shadow: 0 0 2.4rem rgba(180, 40, 40, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Panel header — clean label, no OS dots */
 .rv-terminal__bar {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.6rem 0.9rem;
+  padding: 0.6rem 1.2rem;
   border-bottom: 1px solid var(--rv-border);
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.rv-terminal__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.rv-terminal__dot--red {
-  background: #ff5f56;
-}
-
-.rv-terminal__dot--yellow {
-  background: #ffbd2e;
-}
-
-.rv-terminal__dot--green {
-  background: #27c93f;
+  background: rgba(255, 255, 255, 0.015);
 }
 
 .rv-terminal__title {
-  margin-left: 0.5rem;
   font-family: var(--rv-font-mono);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--rv-text-muted);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+}
+
+.rv-terminal__title::before {
+  content: '// ';
+  color: var(--rv-accent);
 }
 
 .rv-terminal__body {
@@ -149,7 +142,7 @@ h4 {
 
 .rv-tag--accent {
   color: var(--rv-accent);
-  border-color: rgba(240, 160, 32, 0.35);
+  border-color: rgba(204, 51, 51, 0.4);
   background: var(--rv-accent-dim);
 }
 
@@ -169,7 +162,7 @@ h4 {
 
 .rv-status--progress {
   color: var(--rv-warn);
-  background: rgba(240, 160, 32, 0.12);
+  background: var(--rv-accent-dim);
 }
 
 /* Footer */
@@ -191,6 +184,17 @@ h4 {
 }
 
 /* Buttons */
+html .button.button--primary {
+  background: var(--rv-accent);
+  border-color: var(--rv-accent);
+  color: #fff;
+}
+
+html .button.button--primary:hover {
+  background: #b82e2e;
+  border-color: #b82e2e;
+}
+
 html .button.button--secondary {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--rv-border-strong);

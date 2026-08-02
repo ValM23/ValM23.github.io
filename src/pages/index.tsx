@@ -16,9 +16,6 @@ function Terminal({
   return (
     <div className={clsx('rv-terminal', wide && styles.wide)}>
       <div className="rv-terminal__bar">
-        <span className="rv-terminal__dot rv-terminal__dot--red" />
-        <span className="rv-terminal__dot rv-terminal__dot--yellow" />
-        <span className="rv-terminal__dot rv-terminal__dot--green" />
         <span className="rv-terminal__title">{title}</span>
       </div>
       <div className="rv-terminal__body">{children}</div>
