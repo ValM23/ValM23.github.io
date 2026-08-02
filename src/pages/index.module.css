@@ -1,0 +1,182 @@
+.hero {
+  padding: 3rem 0 2rem;
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.heroName {
+  margin: 0.75rem 0 0.25rem;
+  font-size: 1.75rem;
+}
+
+.heroTagline {
+  color: var(--rv-accent);
+  font-family: var(--rv-font-mono);
+  font-size: 0.95rem;
+  margin: 0 0 0.75rem;
+}
+
+.heroBody {
+  color: var(--rv-text-muted);
+  max-width: 60ch;
+  line-height: 1.6;
+  margin: 0 0 1.25rem;
+}
+
+.heroLinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.heroLocation {
+  font-family: var(--rv-font-mono);
+  font-size: 0.85rem;
+  color: var(--rv-text-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  padding-bottom: 3rem;
+}
+
+@media (max-width: 850px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.expList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.expHeader {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.6rem;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+}
+
+.expTitle {
+  font-weight: 600;
+  color: var(--rv-text-primary);
+}
+
+.expOrg {
+  color: var(--rv-accent);
+  font-size: 0.9rem;
+}
+
+.expDate {
+  color: var(--rv-text-muted);
+  font-family: var(--rv-font-mono);
+  font-size: 0.75rem;
+  margin-left: auto;
+}
+
+.expBullets {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--rv-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.skillList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.skillLabel {
+  font-family: var(--rv-font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rv-text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.skillTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.certList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.certItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--rv-border);
+}
+
+.certItem:last-child {
+  border-bottom: none;
+}
+
+.certName {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.certDetail {
+  color: var(--rv-text-muted);
+  font-size: 0.8rem;
+}
+
+.projectGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.projectCard {
+  border: 1px solid var(--rv-border);
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.projectName {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.projectMeta {
+  font-family: var(--rv-font-mono);
+  font-size: 0.7rem;
+  color: var(--rv-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.projectDesc {
+  font-size: 0.85rem;
+  color: var(--rv-text-muted);
+  line-height: 1.5;
+  margin: 0 0 0.6rem;
+}
+
+.projectLink {
+  font-family: var(--rv-font-mono);
+  font-size: 0.8rem;
+  color: var(--rv-accent);
+}

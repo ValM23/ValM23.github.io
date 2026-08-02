@@ -1,0 +1,203 @@
+/* Independent design system — deliberately not shared with
+   chaosfoundry.digital or archknight23.github.io. Different hue family
+   (slate/graphite + amber, not violet/gold), different type (a common
+   professional monospace, not a custom display face), different motif
+   (flat terminal chrome, not glass/aurora). */
+
+:root {
+  --rv-bg-deep: #0b0e14;
+  --rv-bg-surface: #12161f;
+  --rv-bg-panel: #161b26;
+  --rv-border: rgba(255, 255, 255, 0.08);
+  --rv-border-strong: rgba(255, 255, 255, 0.16);
+  --rv-text-primary: #e4e7ee;
+  --rv-text-muted: #8b93a7;
+  --rv-accent: #f0a020;
+  --rv-accent-dim: rgba(240, 160, 32, 0.15);
+  --rv-ok: #3ecf8e;
+  --rv-warn: #f0a020;
+
+  --rv-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --rv-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --ifm-color-primary: #f0a020;
+  --ifm-color-primary-dark: #d88f18;
+  --ifm-color-primary-darker: #cc8617;
+  --ifm-color-primary-darkest: #a86f13;
+  --ifm-color-primary-light: #f2ab3b;
+  --ifm-color-primary-lighter: #f3b04a;
+  --ifm-color-primary-lightest: #f6c274;
+  --ifm-background-color: var(--rv-bg-deep);
+  --ifm-navbar-background-color: rgba(11, 14, 20, 0.92);
+  --ifm-footer-background-color: var(--rv-bg-surface);
+  --ifm-font-color-base: var(--rv-text-primary);
+  --ifm-font-family-base: var(--rv-font-body);
+  --ifm-font-family-monospace: var(--rv-font-mono);
+  --ifm-link-color: var(--rv-accent);
+  --ifm-code-font-size: 90%;
+  --docusaurus-highlighted-code-line-bg: rgba(240, 160, 32, 0.12);
+}
+
+/* Same html[data-theme=dark] specificity issue as the CF build — Infima's
+   own dark values live there and outrank :root, so they're restated here. */
+html[data-theme='dark'] {
+  --ifm-background-color: var(--rv-bg-deep);
+  --ifm-background-surface-color: var(--rv-bg-surface);
+  --ifm-navbar-background-color: rgba(11, 14, 20, 0.92);
+  --ifm-footer-background-color: var(--rv-bg-surface);
+  --ifm-font-color-base: var(--rv-text-primary);
+  --ifm-heading-color: var(--rv-text-primary);
+}
+
+body {
+  font-family: var(--rv-font-body);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--rv-font-mono);
+  letter-spacing: -0.01em;
+}
+
+.navbar {
+  border-bottom: 1px solid var(--rv-border);
+  backdrop-filter: blur(10px);
+}
+
+.navbar__title {
+  font-family: var(--rv-font-mono);
+  font-weight: 600;
+  color: var(--rv-accent);
+}
+
+.navbar__link {
+  font-family: var(--rv-font-mono);
+  font-size: 0.85rem;
+}
+
+/* Terminal window chrome — the site's one recurring motif */
+.rv-terminal {
+  border: 1px solid var(--rv-border);
+  border-radius: 8px;
+  background: var(--rv-bg-panel);
+  overflow: hidden;
+}
+
+.rv-terminal__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--rv-border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.rv-terminal__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.rv-terminal__dot--red {
+  background: #ff5f56;
+}
+
+.rv-terminal__dot--yellow {
+  background: #ffbd2e;
+}
+
+.rv-terminal__dot--green {
+  background: #27c93f;
+}
+
+.rv-terminal__title {
+  margin-left: 0.5rem;
+  font-family: var(--rv-font-mono);
+  font-size: 0.75rem;
+  color: var(--rv-text-muted);
+}
+
+.rv-terminal__body {
+  padding: 1.25rem 1.5rem;
+}
+
+.rv-prompt {
+  font-family: var(--rv-font-mono);
+  font-size: 0.85rem;
+  color: var(--rv-text-muted);
+}
+
+.rv-prompt::before {
+  content: '$ ';
+  color: var(--rv-accent);
+}
+
+.rv-tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--rv-font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  border: 1px solid var(--rv-border-strong);
+  color: var(--rv-text-muted);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rv-tag--accent {
+  color: var(--rv-accent);
+  border-color: rgba(240, 160, 32, 0.35);
+  background: var(--rv-accent-dim);
+}
+
+.rv-status {
+  font-family: var(--rv-font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.rv-status--active {
+  color: var(--rv-ok);
+  background: rgba(62, 207, 142, 0.12);
+}
+
+.rv-status--progress {
+  color: var(--rv-warn);
+  background: rgba(240, 160, 32, 0.12);
+}
+
+/* Footer */
+.footer {
+  border-top: 1px solid var(--rv-border);
+}
+
+.footer__title {
+  font-family: var(--rv-font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.footer__copyright {
+  font-family: var(--rv-font-mono);
+  font-size: 0.75rem;
+  color: var(--rv-text-muted);
+}
+
+/* Buttons */
+html .button.button--secondary {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--rv-border-strong);
+  color: var(--rv-text-primary);
+}
+
+html .button.button--secondary:hover {
+  border-color: var(--rv-accent);
+  color: var(--rv-accent);
+}
