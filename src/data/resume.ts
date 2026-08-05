@@ -85,6 +85,7 @@ export const SKILLS = [
 export const CERTS = [
   {name: 'CompTIA Security+', detail: 'Valid through Nov 2027', status: 'active'},
   {name: 'HTB CPTS', detail: 'Hack The Box', status: 'progress'},
+  {name: 'B.S., Economics', detail: 'Arizona State University', status: 'progress'},
   {name: 'Associate of Arts', detail: 'Houston Community College', status: 'active'},
 ];
 
