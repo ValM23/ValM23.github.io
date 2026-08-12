@@ -1,15 +1,15 @@
 export const EXPERIENCE = [
   {
     title: 'Security Researcher / Infrastructure Engineer',
-    org: 'Freelance Infrastructure & Security Consulting',
+    org: 'Independent Security Research & Consulting',
     date: 'May 2020 – Present',
     bullets: [
       'Conduct offensive security research including vulnerability analysis, OSINT tool development, and steganographic encoding techniques for red team applications.',
-      'Developed and published open-source security tools for OSINT data collection and steganographic analysis (available on GitHub).',
-      'Build and validate detection use cases, security rules, and correlation logic based on the MITRE ATT&CK framework and adversarial behavior patterns.',
-      'Design and deploy secure cloud infrastructure for a streaming/media client — streaming servers, web platforms, CI/CD pipelines, and automation.',
+      'Designed and shipped open-source security tools — including dork2intel (Google dork → AI search → local-LLM analysis pipeline) and a SonicPi steganographic encoder for DLP-evasion research.',
+      'Build and validate detection-oriented thinking from an attacker perspective, mapping techniques to observable telemetry and documenting findings with reproduction steps.',
+      'Design and deploy secure infrastructure for consulting clients — application platforms, CI/CD pipelines, automation, and access-controlled collaboration environments.',
       'Deployed self-hosted GitLab on Ubuntu Server behind a Tailscale VPN with scoped, tag-based ACLs for external collaborator access. Built backends with proper auth and row-level security.',
-      'Produce cybersecurity educational content translating complex security concepts for general audiences.',
+      'Publish technical writeups on CI/CD failure modes, design-token automation, and infrastructure access patterns.',
     ],
   },
   {
@@ -19,7 +19,7 @@ export const EXPERIENCE = [
     bullets: [
       'Monitored 200+ endpoints across nationwide SCADA/OT/IT infrastructure using Splunk and Taegis XDR to maintain uptime and operational continuity.',
       'Managed network outage response, coordinating with MSPs, ISPs, and field teams to restore service across critical energy infrastructure under time-critical pressure.',
-      'Triaged and escalated 50+ daily alerts across distributed pipeline systems, distinguishing operational events from infrastructure issues requiring immediate action.',
+      'Triaged 50+ daily alerts in Taegis XDR, performing initial correlation of system telemetry and routing findings to Cyber Security and Network Engineering via JIRA queue.',
       'Documented incident timelines, root cause analyses, and resolution procedures for operational and leadership review.',
       'Operated in a 24/7 critical infrastructure environment requiring continuous situational awareness and cross-functional coordination.',
     ],
@@ -99,24 +99,24 @@ type Project = {
 
 export const PROJECTS: Project[] = [
   {
-    name: 'NahamCon 2025 CTF',
-    meta: 'Rank 486/1,709 · Top 30% globally',
-    desc: 'Competed against 1,700+ teams. Solved challenges in reverse engineering, web exploitation, and OSINT using Ghidra, Burp Suite, and custom Python scripts.',
-    // No outbound link here on purpose — the team CTFtime page lists
-    // teammates whose handles shouldn't be one click from this resume.
-  },
-  {
-    name: 'OSINT Document Scraper',
-    meta: 'Python · Active development',
-    desc: 'Keyword-and-context scraper for building social-engineering assessment material from source documents.',
-    href: 'https://github.com/valm23/osint_scraper',
+    name: 'dork2intel',
+    meta: 'Python · 2026',
+    desc: 'Google dorks → AI-native search prompts → Tavily search → local-LLM analysis. Iterable OSINT pipeline with persisted sessions, startup gate, and agent skill generation. 23 unit tests, pip-installable CLI.',
+    href: 'https://github.com/ValM23/dork2intel',
     linkLabel: 'View source',
   },
   {
     name: 'SonicPi Steganographic Encoder',
     meta: 'Ruby · 2024',
-    desc: 'RSA-encrypted payloads reshaped into MIDI/audio via Sonic Pi, as a research case for DLP evasion.',
+    desc: 'Zero-dependency tool encoding RSA-OAEP payloads as MIDI note sequences — DLP-evasion research with lossless byte↔nibble mapping, spec-correct MIDI output, and an 11-test round-trip suite.',
     href: 'https://github.com/ValM23/SonicPi-Stenographic-Encoder',
     linkLabel: 'View source',
+  },
+  {
+    name: 'NahamCon 2025 CTF',
+    meta: 'Rank 486/1,709 · Top 30% globally',
+    desc: 'Competed against 1,700+ teams. Solved challenges in reverse engineering, web exploitation, and OSINT using Ghidra, Burp Suite, and custom Python scripts.',
+    // No outbound link here on purpose — the team CTFtime page lists
+    // teammates whose handles shouldn't be one click from this resume.
   },
 ];

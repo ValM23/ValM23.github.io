@@ -37,8 +37,8 @@ function Hero() {
           <p className={styles.heroBody}>
             8 years learning how systems work — and fail — under pressure.
             Now focused on finding the vulnerabilities before the bad actors
-            do. Looking for SOC Analyst, Detection Engineer, or Security
-            Researcher roles.
+            do. Looking for Security Researcher, offensive security, detection
+            engineering, AppSec, or SOC roles.
           </p>
           <div className={styles.heroLinks}>
             <a href="mailto:matt.valdez@pm.me" className="button button--primary">
