@@ -88,7 +88,7 @@ const config: Config = {
           items: [{label: 'All writeups', to: '/writeups'}],
         },
       ],
-      copyright: 'Matthew Valdez (Roxy) — built with caffeine and spite',
+      copyright: 'Matthew Valdez (Roxy) — Security research and infrastructure',
     },
     prism: {
       theme: prismThemes.oneLight,

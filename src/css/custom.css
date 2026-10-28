@@ -10,8 +10,8 @@
   --rv-border: rgba(180, 40, 40, 0.18);
   --rv-border-strong: rgba(180, 40, 40, 0.35);
   --rv-text-primary: #e8e8ec;
-  --rv-text-muted: #888898;
-  --rv-accent: #cc3333;
+  --rv-text-muted: #aaaaba;
+  --rv-accent: #ff8585;
   --rv-accent-dim: rgba(204, 51, 51, 0.12);
   --rv-ok: #3ecf8e;
   --rv-warn: #cc3333;
@@ -239,8 +239,8 @@ h2[class*='title_'] {
 
 /* Buttons */
 html .button.button--primary {
-  background: var(--rv-accent);
-  border-color: var(--rv-accent);
+  background: #b82e2e;
+  border-color: #b82e2e;
   color: #fff;
 }
 
