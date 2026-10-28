@@ -221,3 +221,13 @@
   font-size: 0.8rem;
   color: var(--rv-accent);
 }
+
+/* Keep project cards usable on narrow screens and long source labels. */
+.projectGrid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.projectLink { overflow-wrap: anywhere; }
+.projectCard { min-width: 0; }
+.wide { scroll-margin-top: 5rem; }
+.heroLinks a:focus-visible, .projectLink:focus-visible {
+  outline: 3px solid var(--rv-accent);
+  outline-offset: 4px;
+}
