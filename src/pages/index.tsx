@@ -31,16 +31,19 @@ function Hero() {
           <p className="rv-prompt">cat /etc/profession</p>
           <h1 className={styles.heroName}>Matthew Valdez (Roxy)</h1>
           <p className={styles.heroTagline}>
-            Offensive Security Researcher — vulnerability research, reverse
-            engineering, OSINT tooling.
+            Security operations experience. Offensive security research.
+            Python tooling and infrastructure.
           </p>
           <p className={styles.heroBody}>
-            8 years learning how systems work — and fail — under pressure.
-            Now focused on finding the vulnerabilities before the bad actors
-            do. Looking for Security Researcher, offensive security, detection
-            engineering, AppSec, or SOC roles.
+            Experience supporting SCADA/OT and IT operations at Kinder Morgan
+            and satellite communications at TrustComm. Now building security
+            research tools, contributing to authorized internal testing, and
+            working toward HTB CPTS. Explore the source,
+            scope, and limitations of my selected projects below.
           </p>
           <div className={styles.heroLinks}>
+            <a href="#projects" className="button button--primary">Explore projects</a>
+            <a href="/writeups" className="button button--secondary">Read writeups</a>
             <a href="mailto:matt.valdez@pm.me" className="button button--primary">
               Email
             </a>
@@ -128,9 +131,9 @@ function Certs() {
             <span
               className={clsx(
                 'rv-status',
-                cert.status === 'active' ? 'rv-status--active' : 'rv-status--progress',
+                cert.status !== 'progress' ? 'rv-status--active' : 'rv-status--progress',
               )}>
-              {cert.status === 'active' ? 'Active' : 'In progress'}
+              {cert.status === 'completed' ? 'Completed' : cert.status === 'active' ? 'Active' : 'In progress'}
             </span>
           </div>
         ))}
@@ -141,7 +144,9 @@ function Certs() {
 
 function Projects() {
   return (
+    <section id="projects" aria-labelledby="projects-heading" className={styles.wide}>
     <Terminal title="~/projects" wide>
+      <h2 id="projects-heading">Selected security projects</h2>
       <p className="rv-prompt">ls -la ~/projects/</p>
       <div className={styles.projectGrid}>
         {PROJECTS.map((project) => (
@@ -155,13 +160,14 @@ function Projects() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.projectLink}>
-                → {project.linkLabel}
+                → {project.linkLabel}: {project.name}
               </a>
             )}
           </div>
         ))}
       </div>
     </Terminal>
+    </section>
   );
 }
 
@@ -169,14 +175,14 @@ export default function Home(): React.JSX.Element {
   return (
     <Layout
       title="Home"
-      description="Roxy Valdez — Offensive Security Researcher">
+      description="Matthew Valdez (Roxy): security operations, offensive security research, Python OSINT tooling, and infrastructure. ASU Economics expected May 2028.">
       <Hero />
       <main className="container">
         <div className={styles.grid}>
+          <Projects />
           <Experience />
           <Skills />
           <Certs />
-          <Projects />
         </div>
       </main>
     </Layout>
